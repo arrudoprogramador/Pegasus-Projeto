@@ -5,66 +5,50 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import style from './style';
 
-export default function Cadastro() {
+export default function Login() {
     const navigation = useNavigation();
-    
-    const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [modalMensagem, setModalMensagem] = useState('');
-
-    const fazerCadastro = async () => {
-        if (!nome || !email || !senha) {
-            setModalMensagem('Preencha todos os campos obrigatórios.');
+    
+    const handleLogin = async () => {
+        if (!email || !senha) {
+            setModalMensagem('Por favor, preencha todos os campos.');
             setModalVisible(true);
             return;
         }
-
-        const dados = new FormData();
-        dados.append('nome', nome);
-        dados.append('email', email);
-        dados.append('password', senha);
-
+    
         try {
-            const response = await axios.post(
-                'http://127.0.0.1:8000/api/conta/adicionar',
-                dados,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                }
-            );
-
-            if (response.status === 201 || response.data?.mensagem?.includes("sucesso")) {
-                const token = response.data.token;
-                if (token) {
-                    await AsyncStorage.setItem('userToken', token);
-                    console.log("Token salvo com sucesso!");
-                }
-
-                setModalMensagem('Cadastro realizado com sucesso!');
+            const response = await axios.post('http://127.0.0.1:8000/api/login', {
+                email,
+                password: senha
+            });
+    
+            const token = response.data.token;
+    
+            if (token) {
+                await AsyncStorage.setItem('authToken', token); 
+                setModalMensagem('Login realizado com sucesso!');
                 setModalVisible(true);
-                navigation.navigate("Login");
+                navigation.navigate('Home'); // Navega automaticamente após login
             } else {
-                setModalMensagem('Cadastro realizado, mas houve um aviso inesperado.');
+                setModalMensagem('Token não recebido. Tente novamente.');
                 setModalVisible(true);
             }
+    
         } catch (error) {
-            console.error("Erro:", JSON.stringify(error.response?.data || error.message, null, 2));
-
-            // Extrai erros do Laravel (campo `errors`)
-            const errors = error.response?.data?.errors;
-            if (errors) {
-                const mensagens = Object.values(errors).flat().join('\n');
-                setModalMensagem(mensagens);
-            } else if (error.response?.data?.message) {
-                setModalMensagem(error.response.data.message);
-            } else {
-                setModalMensagem('Erro ao cadastrar. Verifique os dados e tente novamente.');
+            let errorMessage = 'Erro ao fazer login. Verifique os dados e tente novamente.';
+            
+            if (error.response) {
+                if (error.response.status === 401) {
+                    errorMessage = 'Email ou senha incorretos';
+                } else if (error.response.data?.message) {
+                    errorMessage = error.response.data.message;
+                }
             }
-
+            
+            setModalMensagem(errorMessage);
             setModalVisible(true);
         }
     };
@@ -73,16 +57,11 @@ export default function Cadastro() {
         <View style={style.container}>
             <TextInput 
                 style={style.input} 
-                placeholder="Nome" 
-                value={nome} 
-                onChangeText={setNome} 
-            />
-            <TextInput 
-                style={style.input} 
                 placeholder="Email" 
                 value={email} 
                 onChangeText={setEmail} 
                 keyboardType="email-address"
+                autoCapitalize="none"
             />
             <TextInput 
                 style={style.input} 
@@ -93,12 +72,11 @@ export default function Cadastro() {
             />
 
             <View style={style.buttons}>
-                <TouchableOpacity style={style.button} onPress={fazerCadastro}>
-                    <Text style={style.buttonText}>Cadastre-se</Text>
+                <TouchableOpacity style={style.button} onPress={handleLogin}>
+                    <Text style={style.buttonText}>Fazer Login</Text>
                 </TouchableOpacity>
             </View>
 
-            {/* Modal de resposta */}
             <Modal 
                 animationType="fade" 
                 transparent={true} 
@@ -113,7 +91,7 @@ export default function Cadastro() {
                             onPress={() => {
                                 setModalVisible(false);
                                 if (modalMensagem.includes("sucesso")) {
-                                    navigation.navigate("Login");
+                                    navigation.navigate("Home");
                                 }
                             }}
                         >

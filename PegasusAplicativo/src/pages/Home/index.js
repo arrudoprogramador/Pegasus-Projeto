@@ -85,7 +85,7 @@ export default function Home() {
     const botoes = [
         { nome: "Home", imagem: require("../../../assets/home.png"), tela: "Home" },
         { nome: "Carrinho", imagem: require("../../../assets/carrinho.png"), tela: "Carrinho" },
-        { nome: "Perfil", imagem: require("../../../assets/usuario.png"), tela: "Login" },
+        { nome: "Perfil", imagem: require("../../../assets/usuario.png"), tela: "Cadastro" },
     ];
 
     return (

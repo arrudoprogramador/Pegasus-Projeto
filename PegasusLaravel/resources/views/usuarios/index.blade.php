@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produtos Cadastrados</title>
+    <title>Usuários Cadastrados</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -12,43 +12,27 @@
         @include('componentes.navbarAdmin')
     </header>
 
-    <h5 style="text-align:center">Produtos Cadastrados</h4>
+    <h5 style="text-align:center">Usuários Cadastrados</h4>
 
     <div class="overflow-x-auto bg-white p-4 rounded-lg shadow-md">
                 <table class="table table-striped table-bordered w-full">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Imagem</th>
                             <th>Nome</th>
-                            <th>Descrição</th>
-                            <th>Preço</th>
-                            <th>Editar</th>
+                            <th>Email</th>
                             <th>Excluir</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($produtos as $p)
+                        @foreach($usuarios as $u)
                             <tr>
-                            <td>{{ $p->id }}</td>
-                            <td>
-                                <img src="{{ $p->foto ? asset('img/produtos/' . $p->foto) : asset('img/produtos/default.jpg') }}" alt="Imagem do produto" width="100" height="100">
-                            </td>
+                            <td>{{ $u->id }}</td>
                            
-                            <td>{{ $p->nome }}</td>
-                                <td>{{ $p->descricao }}</td>
-                                <td>R$ {{ number_format($p->preco, 2, ',', '.') }}</td>
+                            <td>{{ $u->nome }}</td>
+                                <td>{{ $u->email }}</td>
                                 <td>
-                                    <form action="{{ route('produto.edit', $p->id) }}">
-                                        @csrf
-                                        <button type="submit" style="background-color:orange">
-                                             <i class="fas fa-edit"></i>
-                                        </button>
-                                    </form>
-                                
-                                </td>
-                                <td>
-                                    <form action="{{ route('produto.excluir', $p->id) }}" method="POST">
+                                    <form action="{{ route('usuario.excluir', $u->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" style="color:red">

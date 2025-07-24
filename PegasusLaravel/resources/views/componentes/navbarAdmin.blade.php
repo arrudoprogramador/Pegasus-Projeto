@@ -40,7 +40,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/cadastrarFavoritos')}}" onclick="ativarLink(this)">
-                        <i class="bi bi-box-seam text-primary"></i> Ver Favoritos
+                        <i class="bi bi-star-fill text-warning"></i> Ver Favoritos
                     </a>
                 </li>
 

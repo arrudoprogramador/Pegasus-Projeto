@@ -60,7 +60,8 @@ class ProdutoController extends Controller
         }
         $produto->save();
 
-        return view('produtos.index', compact('produtos')); 
+        return redirect()->route('produtos.index')->with('success', 'Produto cadastrado com sucesso!');
+
     }
 
     public function edit($id)
