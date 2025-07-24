@@ -29,25 +29,20 @@ export default function App() {
         
 
        
-          <Stack.Screen
-            name="Cadastro"
-            component={Cadastro}
+          <Stack.Screen name="Cadastro" component={Cadastro}
             options={{
               title: "Cadastro",
               headerStyle: { backgroundColor: "#4C9BE5" },
-              headerTintColor: "#4C9BE5",
-              headerShown: false,
+              headerTintColor: "#fff",
             }}
           />
 
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{
+          <Stack.Screen name="Login" component={Login} 
+              options={{
               title: "Login",
               headerStyle: { backgroundColor: "#4C9BE5" },
-              headerTintColor: "#4C9BE5",
-              headerShown: false,
+              headerTintColor: "#fff",
+              
             }}
           />
         
