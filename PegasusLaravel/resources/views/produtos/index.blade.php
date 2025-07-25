@@ -32,7 +32,7 @@
                             <tr>
                             <td>{{ $p->id }}</td>
                             <td>
-                                <img src="{{ $p->foto ? asset('img/produtos/' . $p->foto) : asset('img/produtos/default.jpg') }}" alt="Imagem do produto" width="100" height="100">
+                                <img src="{{ $p->foto ? asset('img/produtos/' . $p->foto) : asset('img/produtos/default.jpg') }}" alt="Imagem do produto" width="84" height="75" style="border-radius: 15%;">
                             </td>
                            
                             <td>{{ $p->nome }}</td>
