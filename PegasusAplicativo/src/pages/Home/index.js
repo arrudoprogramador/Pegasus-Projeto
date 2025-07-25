@@ -44,9 +44,13 @@ export default function Home() {
     };
 
     const botoes = [
-        { nome: "Home", imagem: require("../../../assets/home.png"), tela: "Home" },
-        { nome: "Carrinho", imagem: require("../../../assets/carrinho.png"), tela: "Carrinho" },
-        { nome: "Perfil", imagem: require("../../../assets/usuario.png"), tela: "Cadastro" },
+        
+ { nome: "Home", imagem: require("../../../assets/homeee.png"), tela: "Home" },
+        { nome: "Pesqusar", imagem: require("../../../assets/lupa.png") },
+        { nome: "", imagem: require("../../../assets/sacola.png"), tela: "carrinho", central: true },
+        { nome: "Curtidas", imagem: require("../../../assets/coracao.png"), tela: "coracao" },
+        { nome: "Usuário", imagem: require("../../../assets/user.png"), tela: "User" },
+
     ];
 
     useEffect(() => {
@@ -71,39 +75,82 @@ export default function Home() {
             console.error('Erro ao fazer logout:', error);
         }
     };
-
-    const renderFooter = () => (
-        <LinearGradient colors={['#001F54', '#074b94']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={style.footer}>
-            <View style={style.contentFooter}>
-                {botoes.map((item) => (
-                    <TouchableOpacity
-                        key={item.nome}
+const renderFooter = () => (
+    <LinearGradient
+        colors={['#000']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={style.footer}
+    >
+        {/* Footer fixo */}
+        <View style={style.contentFooter}>
+            {botoes.map((item, index) => (
+                item.central ? (
+                    <TouchableOpacity 
+                        key={index}
+                        style={style.centralButtonWrapper}
+                        onPress={() => navigation.navigate(item.tela)}
+                    >
+                        <View style={style.centralButton}>
+                            <Image source={item.imagem} style={style.centralIcon} />
+                        </View>
+                    </TouchableOpacity>
+                ) : (
+                    <TouchableOpacity 
+                        key={index}
                         style={{ alignItems: 'center' }}
                         onPress={() => navigation.navigate(item.tela)}
                     >
-                        <Image source={item.imagem} style={style.footerIcon} />
-                        <Text style={style.footerText}>{item.nome}</Text>
+                        <Image
+                            source={item.imagem}
+                            style={[
+                                style.footerIcon,
+                                navigation.isFocused(item.tela) && style.footerIconActive
+                            ]}
+                        />
+                        <Text style={[
+                            style.footerText,
+                            navigation.isFocused(item.tela) && style.footerTextActive
+                        ]}>
+                            {item.nome}
+                        </Text>
                     </TouchableOpacity>
-                ))}
-            </View>
-        </LinearGradient>
-    );
+                )
+            ))}
+        </View>
+    </LinearGradient>
+);
+
 
     if (!isAuthenticated) {
-        return (
-            <View style={style.container}>
-                <StatusBar style="dark" />
-                <View style={style.cabecalho}>
-                    <View style={style.headerContent}>
-                        <TextInput style={style.barraPesquisa} placeholder="Buscar produtos esportivos..." placeholderTextColor="#888" />
-                        <View style={style.headerIcons}>
-                            <TouchableOpacity onPress={() => navigation.navigate('Carrinho')}>
-                                <Image source={require('../../../assets/carrinho.png')} style={style.headerIcon} />
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => navigation.navigate('Bate-papo')}>
-                                <Image source={require('../../../assets/batePapo.png')} style={[style.headerIcon, { marginLeft: 15 }]} />
-                            </TouchableOpacity>
+   return (
+        <View style={style.container}>
+            <StatusBar style="dark" />
+            
+            {/* Cabeçalho fixo */}
+            <View style={style.cabecalho}>
+                <View style={style.headerContent}>
+                    <View style={style.nav}>
+                    <Text>
+                        logo
+                    </Text>
+                    <View style={style.headerIcons}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Carrinho')}>
+                            <Image
+                                source={require('../../../assets/sino.png')}
+                                style={style.headerIcon}
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('Bate-papo')}>
+                            <Image
+                                source={require('../../../assets/batePapo.png')}
+                                style={[style.headerIcon, { marginLeft: 15 }]}
+                            />
+                        </TouchableOpacity>
                         </View>
+                    </View>
+                                                                    <TextInput style={style.barraPesquisa} placeholder="Buscar produtos esportivos..." placeholderTextColor="#888" />
+
                     </View>
                 </View>
 

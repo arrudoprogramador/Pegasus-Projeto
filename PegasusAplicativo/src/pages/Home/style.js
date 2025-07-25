@@ -8,7 +8,7 @@ export default StyleSheet.create({
   },
   cabecalho: {
     backgroundColor: '#ffffff',
-    paddingTop: 50,
+    paddingTop: 10,
     paddingBottom: 15,
     paddingHorizontal: 15,
     borderBottomWidth: 1,
@@ -21,10 +21,19 @@ export default StyleSheet.create({
     zIndex: 10,
   },
   headerContent: {
+    flexDirection: 'colum',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap:10
+  },
+
+  nav:{
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    width:"97%"
   },
+
   barraPesquisa: {
     flex: 1,
     backgroundColor: '#f5f5f5',
@@ -34,6 +43,8 @@ export default StyleSheet.create({
     marginRight: 10,
     fontSize: 14,
     color: '#333',
+        width:"100%"
+
   },
   headerIcons: {
     flexDirection: 'row',
@@ -43,7 +54,7 @@ export default StyleSheet.create({
     width: 24,
     height: 24,
     marginLeft: 15,
-    tintColor: '#008000', 
+    // tintColor: '#008000', 
   },
 
   
@@ -235,32 +246,57 @@ export default StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
-  footer: {
-    height: 60,
-    paddingHorizontal: 20,
-    borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
-  },
-  contentFooter: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+footer: {
+        height: 70,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    contentFooter: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        width: '100%',
+        paddingHorizontal: 10,
+    },
+    footerIcon: {
+        width: 24,
+        height: 24,
+        tintColor: '#fff',
+    },
+    footerIconActive: {
+        // tintColor: '#a0e7e5', // destaque se estiver ativo
+    },
+    footerText: {
+        fontSize: 10,
+        color: '#fff',
+        marginTop: 4,
+    },
+    footerTextActive: {
+        // color: '#a0e7e5',
+    },
+    centralButtonWrapper: {
+        top: -30, // eleva o botão
+    },
+centralButton: {
+    backgroundColor: '#A8CEC3', // cor interna (verde-azulado)
+    width: 70,
+    height: 70,
+    borderRadius: 40,
+    justifyContent: 'center',
     alignItems: 'center',
-  },
-  footerIcon: {
+    borderWidth: 6,
+    borderColor: '#fff', // borda branca
+    shadowColor: '#ffffff',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 8,
+    elevation: 15,
+},
+
+centralIcon: {
     width: 28,
     height: 28,
-    tintColor: '#fff',
-  },
-  footerIconActive: {
-    tintColor: '#008000',
-  },
-  footerText: {
-    fontSize: 10,
-    color: '#fff',
-    marginTop: 2,
-  },
-  footerTextActive: {
-    color: '#008000',
-  },
+    tintColor: '#fff', // tom escuro para contraste
+},
+
 });
