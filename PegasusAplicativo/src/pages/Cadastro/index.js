@@ -98,6 +98,12 @@ export default function Cadastro() {
                 </TouchableOpacity>
             </View>
 
+            <View>
+                <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+                    <Text >Já possui uma conta? Faça login</Text>
+                </TouchableOpacity>
+            </View>
+
             {/* Modal de resposta */}
             <Modal 
                 animationType="fade" 

@@ -45,11 +45,11 @@ export default function Home() {
 
     const botoes = [
         
- { nome: "Home", imagem: require("../../../assets/homeee.png"), tela: "Home" },
+        { nome: "Home", imagem: require("../../../assets/homeee.png"), tela: "Home" },
         { nome: "Pesqusar", imagem: require("../../../assets/lupa.png") },
         { nome: "", imagem: require("../../../assets/sacola.png"), tela: "carrinho", central: true },
         { nome: "Curtidas", imagem: require("../../../assets/coracao.png"), tela: "coracao" },
-        { nome: "Usuário", imagem: require("../../../assets/user.png"), tela: "User" },
+        { nome: "Usuário", imagem: require("../../../assets/user.png"), tela: "Login" },
 
     ];
 
@@ -75,6 +75,8 @@ export default function Home() {
             console.error('Erro ao fazer logout:', error);
         }
     };
+
+    
 const renderFooter = () => (
     <LinearGradient
         colors={['#000']}
@@ -149,8 +151,7 @@ const renderFooter = () => (
                         </TouchableOpacity>
                         </View>
                     </View>
-                                                                    <TextInput style={style.barraPesquisa} placeholder="Buscar produtos esportivos..." placeholderTextColor="#888" />
-
+                        <TextInput style={style.barraPesquisa} placeholder="Buscar produtos esportivos..." placeholderTextColor="#888" />
                     </View>
                 </View>
 

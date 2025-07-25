@@ -77,12 +77,15 @@ export default function Login() {
                 </TouchableOpacity>
             </View>
 
-            <Modal 
-                animationType="fade" 
-                transparent={true} 
-                visible={modalVisible} 
-                onRequestClose={() => setModalVisible(false)}
-            >
+            <View>
+                <TouchableOpacity onPress={() => navigation.navigate("Cadastro")}>
+                    <Text >Ainda não possui uma conta? Cadastre-se</Text>
+                </TouchableOpacity>
+            </View>
+
+            <Modal animationType="fade" transparent={true} visible={modalVisible}
+             onRequestClose={() => setModalVisible(false)}>
+                
                 <View style={style.modalContainer}>
                     <View style={style.modalContent}>
                         <Text style={style.modalText}>{modalMensagem}</Text>
