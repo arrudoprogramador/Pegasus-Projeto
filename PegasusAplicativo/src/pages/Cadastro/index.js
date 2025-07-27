@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Modal, Pressable } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Modal, Pressable, ImageBackground, Image } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,6 +11,7 @@ export default function Cadastro() {
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [senhaVisivel, setSenhaVisivel] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalMensagem, setModalMensagem] = useState('');
 
@@ -70,12 +71,27 @@ export default function Cadastro() {
     };
 
     return (
-        <View style={style.container}>
+        <ImageBackground
+            source={require('../../../assets/bg1.jpg')}
+            style={style.background}
+            resizeMode='cover'
+        >
+        <View style={style.imageOverlay}/>
+
+        <View style={style.overlay}>
+            <View style={style.pai}>
+                <View style={style.text}>
+                    <Text style={style.title}>Cadastro</Text>
+                    <Text style={style.subtitle}>Crie sua conta</Text>
+                </View>        
+
+        <View style={style.inputs}>
             <TextInput 
                 style={style.input} 
                 placeholder="Nome" 
                 value={nome} 
-                onChangeText={setNome} 
+                onChangeText={setNome}
+                placeholderTextColor="#E0E0E0"
             />
             <TextInput 
                 style={style.input} 
@@ -83,26 +99,66 @@ export default function Cadastro() {
                 value={email} 
                 onChangeText={setEmail} 
                 keyboardType="email-address"
+                autoCapitalize='none'
+                placeholderTextColor="#E0E0E0"
             />
+            <View style={style.inputWrapper}>
             <TextInput 
                 style={style.input} 
                 placeholder="Senha" 
                 value={senha} 
                 onChangeText={setSenha} 
-                secureTextEntry
+                secureTextEntry={!senhaVisivel}
+                placeholderTextColor="#E0E0E0"
             />
+
+            <TouchableOpacity
+                style={style.eyeIcon}
+                onPress={() => setSenhaVisivel(!senhaVisivel)}
+                >
+            <Image 
+                source={
+                    senhaVisivel
+                        ? require('../../../assets/olhoA.png')
+                        : require('../../../assets/olhoF.png')
+                }
+                style={[style.icon, { tintColor: '#ffffff', width: 20, height: 20}]}
+            />
+            </TouchableOpacity>
+            </View>
+                      <View style={style.text}>
+            <Text style={style.subText}>
+              Já possui uma conta?{' '}
+              <Text style={style.linkText} onPress={() => navigation.navigate("Login")}>
+                Login
+              </Text>
+            </Text>
+          </View>
+        </View>
+
 
             <View style={style.buttons}>
                 <TouchableOpacity style={style.button} onPress={fazerCadastro}>
                     <Text style={style.buttonText}>Cadastre-se</Text>
                 </TouchableOpacity>
             </View>
+            
+                      <View style={style.socialIcons}>
+                        <TouchableOpacity>
+                          <Image source={require('../../../assets/apple.png')} style={style.icon} />
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                          <Image source={require('../../../assets/google.png')} style={style.icon} />
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                          <Image source={require('../../../assets/face.png')} style={style.icon} />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
 
-            <View>
-                <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-                    <Text >Já possui uma conta? Faça login</Text>
-                </TouchableOpacity>
-            </View>
+
+          
+          
 
             {/* Modal de resposta */}
             <Modal 
@@ -129,5 +185,6 @@ export default function Cadastro() {
                 </View>
             </Modal>
         </View>
+        </ImageBackground>
     );
 }
