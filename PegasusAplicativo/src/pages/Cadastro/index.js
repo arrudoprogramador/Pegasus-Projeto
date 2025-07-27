@@ -14,11 +14,18 @@ export default function Cadastro() {
     const [senhaVisivel, setSenhaVisivel] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalMensagem, setModalMensagem] = useState('');
+    const [confirmarSenha, setConfirmarSenha] = useState('');
 
     const fazerCadastro = async () => {
-        if (!nome || !email || !senha) {
+        if (!nome || !email || !senha || !setConfirmarSenha) {
             setModalMensagem('Preencha todos os campos obrigatórios.');
             setModalVisible(true);
+            return;
+        }
+
+        if (senha !== confirmarSenha){
+            setModalMensagem('As senhas não coincidem.');
+            setModalVisible(true)
             return;
         }
 
@@ -126,7 +133,33 @@ export default function Cadastro() {
             />
             </TouchableOpacity>
             </View>
-                      <View style={style.text}>
+
+            <View style={style.inputWrapper}>
+            <TextInput 
+                style={style.input} 
+                placeholder="Confirmar Senha" 
+                value={confirmarSenha} 
+                onChangeText={setConfirmarSenha}
+                secureTextEntry={!senhaVisivel}
+                placeholderTextColor="#E0E0E0"
+            />
+            <TouchableOpacity
+                style={style.eyeIcon}
+                onPress={() => setSenhaVisivel(!senhaVisivel)}
+            >
+                <Image 
+                source={
+                    senhaVisivel
+                    ? require('../../../assets/olhoA.png')
+                    : require('../../../assets/olhoF.png')
+                }
+                style={[style.icon, { tintColor: '#ffffff', width: 20, height: 20 }]}
+                />
+            </TouchableOpacity>
+            </View>
+
+
+            <View style={style.text}>
             <Text style={style.subText}>
               Já possui uma conta?{' '}
               <Text style={style.linkText} onPress={() => navigation.navigate("Login")}>

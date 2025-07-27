@@ -12,7 +12,7 @@ export default StyleSheet.create({
   pai:{
     displa:'flex',
     flexDirection:'column',
-    gap:40
+    gap:20
   },
 
   overlay: {
