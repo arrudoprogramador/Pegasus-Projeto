@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 
 export default StyleSheet.create({
   container: {

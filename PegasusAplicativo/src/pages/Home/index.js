@@ -47,25 +47,30 @@ export default function Home() {
         
         { nome: "Home", imagem: require("../../../assets/homeee.png"), tela: "Home" },
         { nome: "Pesqusar", imagem: require("../../../assets/lupa.png") },
-        { nome: "", imagem: require("../../../assets/sacola.png"), tela: "carrinho", central: true },
-        { nome: "Curtidas", imagem: require("../../../assets/coracao.png"), tela: "coracao" },
-        { nome: "Usuário", imagem: require("../../../assets/user.png"), tela: "Login" },
+        { nome: "", imagem: require("../../../assets/sacola.png"), tela: "Carrinho", central: true },
+        { nome: "Curtidas", imagem: require("../../../assets/coracao.png"), tela: "Curtidas" },
+        { nome: "Usuário", imagem: require("../../../assets/user.png"), tela: (isAuthenticated) ? "Perfil" : "Login"},
 
     ];
 
     useEffect(() => {
-        const checkAuth = async () => {
-            try {
-                const token = await AsyncStorage.getItem('authToken');
-                setIsAuthenticated(!!token);
-            } catch (error) {
-                console.error('Erro ao verificar autenticação:', error);
-                setIsAuthenticated(false);
-            }
-        };
+  const checkAuth = async () => {
+    try {
+      const token = await AsyncStorage.getItem('authToken');
+      if (token) {
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
+    } catch (error) {
+      console.error('Erro ao verificar autenticação:', error);
+      setIsAuthenticated(false);
+    }
+  };
 
-        checkAuth();
-    }, []);
+  checkAuth();
+}, []);
+
 
     const handleLogout = async () => {
         try {
@@ -137,7 +142,7 @@ const renderFooter = () => (
                         logo
                     </Text>
                     <View style={style.headerIcons}>
-                        <TouchableOpacity onPress={() => navigation.navigate('Carrinho')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Notificações')}>
                             <Image
                                 source={require('../../../assets/sino.png')}
                                 style={style.headerIcon}
