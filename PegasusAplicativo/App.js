@@ -9,6 +9,8 @@ import Login from './src/pages/Login';
 import Perfil from './src/pages/Perfil';
 import Carrinho from './src/pages/Carrinho';
 import Curtidas from './src/pages/curtidas';
+import PerfilProduto from './src/pages/PerfilProduto';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -67,6 +69,15 @@ export default function App() {
           <Stack.Screen name="Login" component={Login} 
               options={{
               title: "Login",
+              headerStyle: { backgroundColor: "#edebeb" },
+              headerTintColor: "#000",
+              
+            }}
+          />
+
+                    <Stack.Screen name="PerfilProduto" component={PerfilProduto} 
+              options={{
+              title: "PerfilProduto",
               headerStyle: { backgroundColor: "#edebeb" },
               headerTintColor: "#000",
               

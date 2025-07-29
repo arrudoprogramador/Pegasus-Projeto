@@ -19,6 +19,38 @@ export default StyleSheet.create({
     elevation: 5,
     zIndex: 10,
   },
+
+topBarWrapper: {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
+  zIndex: 10,
+  backgroundColor: '#fff',
+  elevation: 4, // sombra Android
+  shadowColor: '#000', // sombra iOS
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.1,
+  shadowRadius: 4,
+},
+
+fixedSearchBar: {
+  paddingHorizontal: 12,
+  paddingVertical: 8,
+  borderTopWidth: 1,
+  borderColor: '#ddd',
+  backgroundColor: '#fff',
+},
+
+barraPesquisa: {
+  backgroundColor: '#f2f2f2',
+  borderRadius: 8,
+  paddingHorizontal: 12,
+  height: 40,
+  fontSize: 14,
+},
+
+
   headerContent: {
     flexDirection: 'colum',
     justifyContent: 'space-between',

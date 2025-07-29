@@ -11,6 +11,10 @@ const { width } = Dimensions.get('window');
 export default function Home() {
     const navigation = useNavigation();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    //barra de pesquisa
+    const [showSearchBar, setShowSearchBar] = useState(false);
+    const searchInputRef = useRef(null);
+
 
     const categories = [
         { id: '1', name: "Tênis", image: require("../../../assets/category-sneakers.png") },
@@ -45,8 +49,8 @@ export default function Home() {
 
     const botoes = [
         
-        { nome: "Home", imagem: require("../../../assets/homeee.png"), tela: "Home" },
-        { nome: "Pesqusar", imagem: require("../../../assets/lupa.png") },
+        { nome: "Home", imagem: require("../../../assets/homeee.png"), tela: "PerfilProduto" },
+        { nome: "Pesquisar", imagem: require("../../../assets/lupa.png") },
         { nome: "", imagem: require("../../../assets/sacola.png"), tela: "Carrinho", central: true },
         { nome: "Curtidas", imagem: require("../../../assets/coracao.png"), tela: "Curtidas" },
         { nome: "Usuário", imagem: require("../../../assets/user.png"), tela: (isAuthenticated) ? "Perfil" : "Login"},
@@ -89,6 +93,7 @@ const renderFooter = () => (
         end={{ x: 1, y: 0 }}
         style={style.footer}
     >
+
         {/* Footer fixo */}
         <View style={style.contentFooter}>
             {botoes.map((item, index) => (
@@ -103,29 +108,38 @@ const renderFooter = () => (
                         </View>
                     </TouchableOpacity>
                 ) : (
-                    <TouchableOpacity 
-                        key={index}
-                        style={{ alignItems: 'center' }}
-                        onPress={() => navigation.navigate(item.tela)}
-                    >
-                        <Image
-                            source={item.imagem}
-                            style={[
-                                style.footerIcon,
-                                navigation.isFocused(item.tela) && style.footerIconActive
-                            ]}
-                        />
-                        <Text style={[
-                            style.footerText,
-                            navigation.isFocused(item.tela) && style.footerTextActive
-                        ]}>
-                            {item.nome}
-                        </Text>
-                    </TouchableOpacity>
-                )
-            ))}
-        </View>
-    </LinearGradient>
+         <TouchableOpacity
+          key={index}
+          style={{ alignItems: 'center' }}
+          onPress={() => {
+            if (item.nome === "Pesquisar") {
+              setShowSearchBar(true);
+              setTimeout(() => {
+                searchInputRef.current?.focus();
+              }, 100);
+            } else if (item.tela) {
+              navigation.navigate(item.tela);
+            }
+          }}
+        >
+          <Image
+            source={item.imagem}
+            style={[
+              style.footerIcon,
+              navigation.isFocused?.(item.tela) && style.footerIconActive
+            ]}
+          />
+          <Text style={[
+            style.footerText,
+            navigation.isFocused?.(item.tela) && style.footerTextActive
+          ]}>
+            {item.nome}
+          </Text>
+        </TouchableOpacity>
+      )
+    ))}
+  </View>
+</LinearGradient>
 );
 
 
@@ -156,9 +170,18 @@ const renderFooter = () => (
                         </TouchableOpacity>
                         </View>
                     </View>
-                        <TextInput style={style.barraPesquisa} placeholder="Buscar produtos esportivos..." placeholderTextColor="#888" />
                     </View>
                 </View>
+                
+
+    <View style={style.fixedSearchBar}>
+    <TextInput
+      ref={searchInputRef}
+      style={style.barraPesquisa}
+      placeholder="Buscar produtos esportivos..."
+      placeholderTextColor="#888"
+    />
+  </View>
 
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={style.containerCarrouselImagens}>
