@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Modal, Pressable, ImageBackground, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Modal, Pressable, ImageBackground, Image, Platform} from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Constants from 'expo-constants';
 import style from './style';
 
 export default function Cadastro() {
@@ -15,9 +16,22 @@ export default function Cadastro() {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalMensagem, setModalMensagem] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
+    let apiKey = "http://192.168.18.33:8000";
+    
+      if (__DEV__) {
+        if (Platform.OS === 'web') {
+          apiKey = 'http://127.0.0.1:8000';
+        } else {
+          const hostUri = Constants.expoConfig?.hostUri;
+          const localIP = hostUri ? hostUri.split(':')[0] : 'localhost';
+          apiKey = `http://${localIP}:8000`;
+        }
+      } else {
+        apiKey = "http://192.168.18.33:8000";
+      }
 
     const fazerCadastro = async () => {
-        if (!nome || !email || !senha || !setConfirmarSenha) {
+        if (!nome || !email || !senha || !confirmarSenha) {
             setModalMensagem('Preencha todos os campos obrigatórios.');
             setModalVisible(true);
             return;
@@ -35,8 +49,7 @@ export default function Cadastro() {
         dados.append('password', senha);
 
         try {
-            const response = await axios.post(
-                'http://127.0.0.1:8000/api/conta/adicionar',
+            const response = await axios.post(`${apiKey}/api/conta/adicionar`,
                 dados,
                 {
                     headers: {

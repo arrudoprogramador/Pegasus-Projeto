@@ -7,7 +7,7 @@ export default StyleSheet.create({
   },
   cabecalho: {
     backgroundColor: '#ffffff',
-    paddingTop: 10,
+    paddingTop: 35,
     paddingBottom: 15,
     paddingHorizontal: 15,
     borderBottomWidth: 1,
@@ -74,7 +74,7 @@ barraPesquisa: {
     marginRight: 10,
     fontSize: 14,
     color: '#333',
-        width:"100%"
+    width:"100%"
 
   },
   headerIcons: {
@@ -91,11 +91,11 @@ barraPesquisa: {
   
   containerCarrouselImagens: {
     height: 240,
-    marginVertical: 7,
+    marginVertical: 4,
     },
     carrouselImagens: {
         flex: 1,
-        marginHorizontal: 15,
+        marginHorizontal: 0,
         borderRadius: 10,
         overflow: 'hidden',
         position: 'relative', 
@@ -125,8 +125,8 @@ barraPesquisa: {
     },
 
   image: {
-    width: 400,
-    height: 210,
+    width: 412,
+    height: 220,
     resizeMode: 'cover',
   },
   dotsContainer: {

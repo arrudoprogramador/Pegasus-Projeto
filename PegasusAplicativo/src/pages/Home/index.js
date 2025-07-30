@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import style from './style.js';
-import { TextInput, Dimensions, Text, View, TouchableOpacity, Image, FlatList, ScrollView } from "react-native";
+import { TextInput, Dimensions, Text, View, Platform, TouchableOpacity, Image, FlatList, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import React, { useState, useEffect, useRef } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -11,9 +11,22 @@ const { width } = Dimensions.get('window');
 export default function Home() {
     const navigation = useNavigation();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    //barra de pesquisa
     const [showSearchBar, setShowSearchBar] = useState(false);
     const searchInputRef = useRef(null);
+
+    let apiKey = "http://192.168.18.33:8000";
+    
+      if (__DEV__) {
+        if (Platform.OS === 'web') {
+          apiKey = 'http://127.0.0.1:8000';
+        } else {
+          const hostUri = Constants.expoConfig?.hostUri;
+          const localIP = hostUri ? hostUri.split(':')[0] : 'localhost';
+          apiKey = `http://${localIP}:8000`;
+        }
+      } else {
+        apiKey = "http://192.168.18.33:8000";
+      }
 
 
     const categories = [
@@ -25,17 +38,35 @@ export default function Home() {
         { id: '6', name: "Promoções", image: require("../../../assets/category-discount.png") },
     ];
 
-    const products = [
-        { id: '1', name: "Tênis Air Max TN", price: "R$ 799,90", discount: "R$ 999,90", image: require("../../../assets/airMaxTN.jpeg"), rating: 4.8, sold: 125, promo: "20% OFF" },
-        { id: '2', name: "Camiseta Dry-Fit", price: "R$ 129,90", discount: "R$ 159,90", image: require("../../../assets/dryfit-shirt.jpg"), rating: 4.5, sold: 89, promo: "18% OFF" },
-        { id: '3', name: "Short de Corrida", price: "R$ 149,90", discount: "", image: require("../../../assets/running-shorts.jpg"), rating: 4.7, sold: 42 },
-        { id: '4', name: "Meias Esportivas", price: "R$ 39,90", discount: "R$ 49,90", image: require("../../../assets/sport-socks.jpg"), rating: 4.3, sold: 210, promo: "PROMO" },
-    ];
+    // const products = [
+    //     { id: '1', name: "Tênis Air Max TN", price: "R$ 799,90", discount: "R$ 999,90", image: require("../../../assets/airMaxTN.jpeg"), rating: 4.8, sold: 125, promo: "20% OFF" },
+    //     { id: '2', name: "Camiseta Dry-Fit", price: "R$ 129,90", discount: "R$ 159,90", image: require("../../../assets/dryfit-shirt.jpg"), rating: 4.5, sold: 89, promo: "18% OFF" },
+    //     { id: '3', name: "Short de Corrida", price: "R$ 149,90", discount: "", image: require("../../../assets/running-shorts.jpg"), rating: 4.7, sold: 42 },
+    //     { id: '4', name: "Meias Esportivas", price: "R$ 39,90", discount: "R$ 49,90", image: require("../../../assets/sport-socks.jpg"), rating: 4.3, sold: 210, promo: "PROMO" },
+    // ];
+
+    const buscarProdutos = async () => {
+        try{
+            const response = await fetch(`${apiKey}/visualizarProdutos`, {
+            method: 'GET',
+            headers: {
+            'Accept': 'application/json',
+            },
+        });
+
+        const data = await response.json();
+            console.log('✅ Produtos:', data);
+            return data;
+
+        } catch (error) {
+            console.error('❌ Erro ao buscar produtos:', error);
+        }
+    }
 
     const carouselImages = [
-        require("../../../assets/banner1p.jpg"),
-        require("../../../assets/banner2.jpg"),
         require("../../../assets/banner3.jpg"),
+        require("../../../assets/banner2.jpg"),
+        require("../../../assets/banner1p.jpg"),
     ];
 
     const [activeCarouselIndex, setActiveCarouselIndex] = useState(0);
@@ -88,7 +119,7 @@ export default function Home() {
     
 const renderFooter = () => (
     <LinearGradient
-        colors={['#000']}
+        colors={['#000', '#001']}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
         style={style.footer}
@@ -179,7 +210,7 @@ const renderFooter = () => (
       ref={searchInputRef}
       style={style.barraPesquisa}
       placeholder="Buscar produtos esportivos..."
-      placeholderTextColor="#888"
+      placeholderTextColor="#62a894"
     />
   </View>
 

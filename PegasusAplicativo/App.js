@@ -8,7 +8,7 @@ import Cadastro from './src/pages/Cadastro';
 import Login from './src/pages/Login';
 import Perfil from './src/pages/Perfil';
 import Carrinho from './src/pages/Carrinho';
-import Curtidas from './src/pages/curtidas';
+import Curtidas from './src/pages/Curtidas';
 import PerfilProduto from './src/pages/PerfilProduto';
 
 
@@ -26,8 +26,8 @@ export default function App() {
             component={Home}
             options={{
               title: "Home",
-              headerStyle: { backgroundColor: "#4C9BE5" },
-              headerTintColor: "#4C9BE5",
+              headerStyle: { backgroundColor: "#edebeb" },
+              headerTintColor: "#000",
               headerShown: false,
             }}
           />
@@ -45,7 +45,7 @@ export default function App() {
           <Stack.Screen name="Carrinho" component={Carrinho}
             options={{
               title: "Carrinho",
-              headerStyle: { backgroundColor: "##edebeb" },
+              headerStyle: { backgroundColor: "#edebeb" },
               headerTintColor: "#000",
             }}
           />

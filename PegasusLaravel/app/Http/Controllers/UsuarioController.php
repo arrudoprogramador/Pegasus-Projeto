@@ -22,33 +22,51 @@ class UsuarioController extends Controller
     }
 
     public function loginApi(Request $request)
-        {
-            // Validar os dados
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+    {
+        try {
+            // Validação
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
 
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422); // 422 é mais apropriado para validação
+            if ($validator->fails()) {
+                return response()->json([
+                    'erro' => true,
+                    'mensagem' => 'Erro de validação',
+                    'detalhes' => $validator->errors(),
+                ], 422);
+            }
+
+            // Buscar usuário
+            $usuario = Usuario::where('email', $request->email)->first();
+
+            // Verificar senha
+            if (!$usuario || !Hash::check($request->password, $usuario->password)) {
+                return response()->json([
+                    'erro' => true,
+                    'mensagem' => 'Credenciais inválidas',
+                ], 401);
+            }
+
+            // Gerar token
+            $token = $usuario->createToken('auth-token')->plainTextToken;
+
+            return response()->json([
+                'mensagem' => 'Login bem-sucedido',
+                'usuario' => $usuario->only(['id', 'nome', 'email']),
+                'token' => $token
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'erro' => true,
+                'mensagem' => 'Erro inesperado ao tentar fazer login',
+                'detalhes' => $e->getMessage(),
+            ], 500);
         }
-
-        $usuario = Usuario::where('email', $request->email)->first();
-
-        // Verificar usuário e senha ANTES de criar token
-        if (!$usuario || !Hash::check($request->password, $usuario->password)) {
-            return response()->json(['error' => 'Credenciais inválidas'], 401);
-        }
-
-        // Criar token apenas se as credenciais estiverem corretas
-        $token = $usuario->createToken('auth-token')->plainTextToken;
-
-        return response()->json([
-            'message' => 'Login bem-sucedido',
-            'usuario' => $usuario->only(['id', 'name', 'email']), // Não retornar todos os dados
-            'token' => $token
-        ], 200);
     }
+
 
     public function perfil(Request $request)
     {
@@ -57,23 +75,38 @@ class UsuarioController extends Controller
 
     public function storeApi(Request $request)
     {
-        $request->validate([
-            'nome' => 'required|string',
-            'email' => 'required|email|unique:usuario,email', 
-            'password' => 'required',
-        ]);
+        try{
+            $request->validate([
+                'nome' => 'required|string',
+                'email' => 'required|email|unique:usuario,email', 
+                'password' => 'required',
+            ]);
 
-        $usuario = new Usuario();
-        $usuario->nome = $request->input('nome');
-        $usuario->email = $request->input('email');
-        $usuario->password = Hash::make($request->input('password'));
+            $usuario = new Usuario();
+            $usuario->nome = $request->input('nome');
+            $usuario->email = $request->input('email');
+            $usuario->password = Hash::make($request->input('password'));
 
-        $usuario->save();
+            $usuario->save();
 
-        return response()->json([
-            'mensagem' => 'Usuário criado com sucesso!',
-            'usuario' => $usuario,
-        ], 201);
+            return response()->json([
+                'mensagem' => 'Usuário criado com sucesso!',
+                'usuario' => $usuario,
+            ], 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'erro' => true,
+                'mensagem' => 'Erro de validação',
+                'detalhes' => $e->errors(), // lista todos os erros de cada campo
+            ], 422);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'erro' => true,
+                'mensagem' => 'Erro inesperado ao criar usuário',
+                'detalhes' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function destroyApi($id)

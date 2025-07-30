@@ -7,6 +7,7 @@ import styles from './style';
 import api from '../../services/api'; 
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import Constants from 'expo-constants';
 import { Image } from 'react-native';
 
 export default function Perfil() {
@@ -22,6 +23,19 @@ export default function Perfil() {
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation(); 
   const [isAuthenticated, setIsAuthenticated] = useState(true);
+  let apiKey = "http://192.168.18.33:8000";
+    
+      if (__DEV__) {
+        if (Platform.OS === 'web') {
+          apiKey = 'http://127.0.0.1:8000';
+        } else {
+          const hostUri = Constants.expoConfig?.hostUri;
+          const localIP = hostUri ? hostUri.split(':')[0] : 'localhost';
+          apiKey = `http://${localIP}:8000`;
+        }
+      } else {
+        apiKey = "http://192.168.18.33:8000";
+      }
 
   useEffect(() => {
     const buscarDados = async () => {
@@ -52,7 +66,7 @@ export default function Perfil() {
       formData.append('password', senha);
       formData.append('_method', 'PUT');
 
-      const response = await fetch(`http://127.0.0.1:8000/api/conta/atualizar/${userId}`, {
+      const response = await fetch(`${apiKey}/api/conta/atualizar/${userId}`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -139,7 +153,7 @@ export default function Perfil() {
     try {
       await AsyncStorage.removeItem('authToken');
       setUsuario(null);
-      navigation.navigate('EscolherLogin');
+      navigation.navigate('Home');
     } catch (error) {
       console.error('Erro ao sair da conta:', error);
     }
