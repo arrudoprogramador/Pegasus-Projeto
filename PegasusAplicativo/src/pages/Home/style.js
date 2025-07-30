@@ -66,7 +66,6 @@ barraPesquisa: {
   },
 
   barraPesquisa: {
-    flex: 1,
     backgroundColor: '#f5f5f5',
     borderRadius: 8,
     paddingVertical: 10,

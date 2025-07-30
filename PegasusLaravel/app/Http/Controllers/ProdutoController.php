@@ -13,6 +13,27 @@ class ProdutoController extends Controller
         return view('produtos.index', compact('produtos'));      
     }
 
+    public function indexApi()
+    {
+        try{
+            $produtos = Produto::all();
+
+            return response()->json([
+            'success' => true,
+            'mensagem' => 'Lista de produtos carregada com sucesso',
+            'data' => $produtos
+        ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'mensagem' => 'Erro ao carregar produtos',
+                'detalhes' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
    public function store(Request $request)
 {
     $request->validate([
