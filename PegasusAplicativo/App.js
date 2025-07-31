@@ -9,7 +9,7 @@ import Login from './src/pages/Login';
 import Perfil from './src/pages/Perfil';
 import Carrinho from './src/pages/Carrinho';
 import Curtidas from './src/pages/Curtidas';
-import PerfilProduto from './src/pages/PerfilProduto';
+import ProductDetail from './src/pages/ProductDetail';
 
 
 const Stack = createNativeStackNavigator();
@@ -75,9 +75,9 @@ export default function App() {
             }}
           />
 
-                    <Stack.Screen name="PerfilProduto" component={PerfilProduto} 
+                    <Stack.Screen name="ProductDetail" component={ProductDetail} 
               options={{
-              title: "PerfilProduto",
+              title: "ProductDetail",
               headerStyle: { backgroundColor: "#edebeb" },
               headerTintColor: "#000",
               

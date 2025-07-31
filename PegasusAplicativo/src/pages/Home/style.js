@@ -7,7 +7,7 @@ export default StyleSheet.create({
   },
   cabecalho: {
     backgroundColor: '#ffffff',
-    paddingTop: 35,
+    paddingTop: 15,
     paddingBottom: 15,
     paddingHorizontal: 15,
     borderBottomWidth: 1,

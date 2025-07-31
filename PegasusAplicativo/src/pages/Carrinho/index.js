@@ -42,7 +42,7 @@ const mockProducts = [
 
 export default function Carrinho() {
   const navigation = useNavigation();
-  const [products, setProducts] = useState(mockProducts);
+  const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideUpAnim = useRef(new Animated.Value(30)).current;
@@ -50,6 +50,27 @@ export default function Carrinho() {
   
 
   useEffect(() => {
+const carregarCarrinho = async () => {
+  try {
+    const dados = await AsyncStorage.getItem('carrinho');
+    const produtos = dados ? JSON.parse(dados) : [];
+
+    // Sanitiza os produtos: garante que price seja número
+    const produtosSanitizados = produtos.map(p => ({
+      ...p,
+      price: typeof p.price === 'number' ? p.price : parseFloat(p.price) || 0,
+      quantity: typeof p.quantity === 'number' ? p.quantity : parseInt(p.quantity) || 1,
+    }));
+
+    setProducts(produtosSanitizados);
+
+    const newTotal = produtosSanitizados.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    setTotal(newTotal);
+  } catch (error) {
+    console.error('Erro ao carregar o carrinho:', error);
+  }
+};
+
     // Animação de entrada
     Animated.parallel([
       Animated.timing(fadeAnim, {
@@ -65,9 +86,8 @@ export default function Carrinho() {
       })
     ]).start();
 
-    const newTotal = products.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    setTotal(newTotal);
-  }, [products]);
+      carregarCarrinho();
+  }, []);
 
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity < 1) return;
