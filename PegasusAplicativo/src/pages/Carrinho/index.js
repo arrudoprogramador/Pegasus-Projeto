@@ -127,49 +127,50 @@ const carregarCarrinho = async () => {
     });
   };
 
-  const renderItem = ({ item }) => (
-    <Animated.View 
-      style={[
-        styles.productCard,
-        { opacity: fadeAnim, transform: [{ translateY: slideUpAnim }] }
-      ]}
-    >
-      <Image source={{ uri: item.image }} style={styles.productImage} />
+const renderItem = ({ item }) => (
+  <Animated.View 
+    style={[
+      styles.productCard,
+      { opacity: fadeAnim, transform: [{ translateY: slideUpAnim }] }
+    ]}
+  >
+    <Image source={{ uri: item.image || `http://192.168.18.33:8000/img/produtos/${item.foto}` }} style={styles.productImage} />
+    
+    <View style={styles.productInfo}>
+      <Text style={styles.productName}>{item.nome}</Text>
+      <Text style={styles.productDetails}>Cor: {item.cor} | Tamanho: {item.tamanho}</Text>
       
-      <View style={styles.productInfo}>
-        <Text style={styles.productName}>{item.name}</Text>
-        <Text style={styles.productDetails}>Cor: {item.color} | Tamanho: {item.quantity}</Text>
-        
-        <View style={styles.quantityContainer}>
-          <TouchableOpacity 
-            onPress={() => updateQuantity(item.id, item.quantity - 1)}
-            style={styles.quantityButton}
-          >
-            <Feather name="minus" size={18} color="#000" />
-          </TouchableOpacity>
-          
-          <Text style={styles.quantityText}>{item.quantity}</Text>
-          
-          <TouchableOpacity 
-            onPress={() => updateQuantity(item.id, item.quantity + 1)}
-            style={styles.quantityButton}
-          >
-            <Feather name="plus" size={18} color="#000" />
-          </TouchableOpacity>
-        </View>
-      </View>
-      
-      <View style={styles.priceContainer}>
-        <Text style={styles.productPrice}>R$ {item.price.toFixed(2)}</Text>
+      <View style={styles.quantityContainer}>
         <TouchableOpacity 
-          onPress={() => removeItem(item.id)}
-          style={styles.removeButton}
+          onPress={() => updateQuantity(item.id, item.quantity - 1)}
+          style={styles.quantityButton}
         >
-          <MaterialCommunityIcons name="trash-can-outline" size={20} color="#e74c3c" />
+          <Feather name="minus" size={18} color="#000" />
+        </TouchableOpacity>
+        
+        <Text style={styles.quantityText}>{item.quantity}</Text>
+        
+        <TouchableOpacity 
+          onPress={() => updateQuantity(item.id, item.quantity + 1)}
+          style={styles.quantityButton}
+        >
+          <Feather name="plus" size={18} color="#000" />
         </TouchableOpacity>
       </View>
-    </Animated.View>
-  );
+    </View>
+    
+    <View style={styles.priceContainer}>
+      <Text style={styles.productPrice}>R$ {Number(item.preco).toFixed(2)}</Text>
+      <TouchableOpacity 
+        onPress={() => removeItem(item.id)}
+        style={styles.removeButton}
+      >
+        <MaterialCommunityIcons name="trash-can-outline" size={20} color="#e74c3c" />
+      </TouchableOpacity>
+    </View>
+  </Animated.View>
+);
+
 
   if (isAuthenticated) {
   return (

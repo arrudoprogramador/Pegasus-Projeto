@@ -2,26 +2,53 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import style from './style.js';
+import React, { useState } from 'react';
+import { Modal, Pressable } from 'react-native';
+
+
 
 export default function ProductDetail() {
   const navigation = useNavigation();
   const route = useRoute();
   const { product } = route.params;
+  const [selectedColor, setSelectedColor] = useState(product.cor || '');
+  const [selectedSize, setSelectedSize] = useState(product.tamanho || '');
+  const [modalCorVisible, setModalCorVisible] = useState(false);
+  const [modalTamanhoVisible, setModalTamanhoVisible] = useState(false);
 
 
+  const corHex = {
+  'Preto': '#000',
+  'Branco': '#fff',
+  'Azul': '#3498db',
+  'Vermelho': '#e74c3c',
+};
 
 
 const adicionarAoCarrinho = async () => {
   try {
+
+    if (!selectedColor || !selectedSize) {
+      alert('Selecione cor e tamanho antes de adicionar ao carrinho.');
+      return;
+    }
+
     const carrinhoAtual = await AsyncStorage.getItem('carrinho');
     const carrinho = carrinhoAtual ? JSON.parse(carrinhoAtual) : [];
 
-    const existente = carrinho.find(item => item.id === product.id);
+    const existente = carrinho.find(item => item.id === product.id &&
+      item.cor === selectedColor &&
+      item.tamanho === selectedSize
+    );
 
     if (existente) {
       existente.quantity += 1;
     } else {
-      carrinho.push({ ...product, quantity: 1 });
+      carrinho.push({  ...product,
+        cor: selectedColor,
+        tamanho: selectedSize,
+        quantity: 1
+      });
     }
 
     await AsyncStorage.setItem('carrinho', JSON.stringify(carrinho));
@@ -63,25 +90,25 @@ const adicionarAoCarrinho = async () => {
         </View>
 
         {/* Seletores */}
-        <View style={style.selectors}>
-          <View style={style.selector}>
-            <Text style={style.selectorLabel}>Cor</Text>
-            <View style={[style.circle, { backgroundColor: product.cor || '#ccc' }]} />
-          </View>
+<View style={style.selectors}>
+  {/* Cor */}
+  <View style={style.selector}>
+    <Text style={style.selectorLabel}>Cor</Text>
+    <TouchableOpacity style={style.colorRow} onPress={() => setModalCorVisible(true)}>
+    <View style={[style.colorCircle, { backgroundColor: corHex[selectedColor] || '#ccc' }]} />
+      <Text style={style.sizeText}>{selectedColor || 'Selecionar'}</Text>
+    </TouchableOpacity>
+  </View>
 
-          <View style={style.selector}>
-            <Text style={style.selectorLabel}>Tamanho</Text>
-            <View style={style.sizeCircle}>
-              <Text style={style.sizeText}>{product.tamanho || 'Único'}</Text>
-            </View>
-          </View>
+  {/* Tamanho */}
+  <View style={style.selector}>
+    <Text style={style.selectorLabel}>Tamanho</Text>
+    <TouchableOpacity onPress={() => setModalTamanhoVisible(true)}>
+      <Text style={style.sizeText}>{selectedSize || 'Selecionar'}</Text>
+    </TouchableOpacity>
+  </View>
+</View>
 
-          <View style={style.selector}>
-            <Text style={style.selectorLabel}>Zoom</Text>
-            <View style={style.circle} />
-          </View>
-        </View>
-      </View>
 
       {/* Rodapé */}
       <View style={style.footer}>
@@ -99,5 +126,76 @@ const adicionarAoCarrinho = async () => {
         </TouchableOpacity>
       </View>
     </View>
+
+
+      {/* // modal da cor */}
+<Modal
+  visible={modalCorVisible}
+  transparent
+  animationType="slide"
+  onRequestClose={() => setModalCorVisible(false)}
+>
+  <View style={style.modalOverlay}>
+    <View style={style.modalContent}>
+      <View style={style.modalHeader}>
+        <Text style={style.modalTitle}>Selecione uma cor</Text>
+        <TouchableOpacity onPress={() => setModalCorVisible(false)}>
+          <Text style={style.closeButton}>✕</Text>
+        </TouchableOpacity>
+      </View>
+
+      {['Preto', 'Branco', 'Azul', 'Vermelho'].map(cor => (
+        <TouchableOpacity
+          key={cor}
+          onPress={() => {
+            setSelectedColor(cor);
+            setModalCorVisible(false);
+          }}
+        >
+          <Text style={style.modalOption}>{cor}</Text>
+        </TouchableOpacity>
+      ))}
+    </View>
+  </View>
+</Modal>
+
+
+
+
+{/* // modal do tamanho  */}
+<Modal
+  visible={modalTamanhoVisible}
+  transparent
+  animationType="slide"
+  onRequestClose={() => setModalTamanhoVisible(false)}
+>
+  <View style={style.modalOverlay}>
+    <View style={style.modalContent}>
+      <View style={style.modalHeader}>
+        <Text style={style.modalTitle}>Selecione um tamanho</Text>
+        <TouchableOpacity onPress={() => setModalTamanhoVisible(false)}>
+          <Text style={style.closeButton}>✕</Text>
+        </TouchableOpacity>
+      </View>
+
+      {['37', '38', '39', '40', '41', '42'].map(tam => (
+        <TouchableOpacity
+          key={tam}
+          onPress={() => {
+            setSelectedSize(tam);
+            setModalTamanhoVisible(false);
+          }}
+        >
+          <Text style={style.modalOption}>{tam}</Text>
+        </TouchableOpacity>
+      ))}
+    </View>
+  </View>
+</Modal>
+
+
+</View>
+
   );
 }
+

@@ -94,7 +94,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   sizeText: {
-    color: '#fff',
+    color: '#000',
     fontWeight: 'bold',
   },
   footer: {
@@ -136,4 +136,65 @@ export default StyleSheet.create({
     fontSize: 20,
     color: '#fff',
   },
+
+
+  modalOverlay: {
+  flex: 1,
+  backgroundColor: 'rgba(0,0,0,0.5)',
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+modalContent: {
+  width: '80%',
+  backgroundColor: '#fff',
+  borderRadius: 10,
+  padding: 20,
+  alignItems: 'center',
+},
+modalTitle: {
+  fontSize: 18,
+  fontWeight: 'bold',
+  marginBottom: 10,
+},
+modalOption: {
+  fontSize: 16,
+  padding: 10,
+  borderBottomWidth: 1,
+  borderColor: '#eee',
+  width: '100%',
+  textAlign: 'center',
+},
+
+colorRow: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  paddingVertical: 5,
+},
+
+colorCircle: {
+  width: 20,
+  height: 20,
+  borderRadius: 10,
+  marginRight: 8,
+  borderWidth: 1,
+  borderColor: '#999',
+},
+
+modalHeader: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginBottom: 10,
+},
+
+closeButton: {
+  fontSize: 20,
+  fontWeight: 'bold',
+  color: '#e74c3c',
+  paddingHorizontal: 10,
+  paddingVertical: 5,
+},
+
+
+
 });
