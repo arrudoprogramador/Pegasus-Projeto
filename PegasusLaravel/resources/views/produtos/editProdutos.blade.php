@@ -22,6 +22,9 @@
             <label for="nome">Nome</label>
             <input type="text" id="nome" name="nome" value="{{ old('nome', $produto->nome) }}" required>
 
+            <label for="marca">Marca</label>
+            <input type="text" id="marca" name="marca" value="{{ old('marca', $produto->marca) }}" required>
+
             <label for="descricao">Descrição</label>
             <textarea id="descricao" name="descricao" rows="4" required>{{ old('descricao', $produto->descricao) }}</textarea>
 

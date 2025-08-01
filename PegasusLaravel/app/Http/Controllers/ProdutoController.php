@@ -38,6 +38,7 @@ class ProdutoController extends Controller
 {
     $request->validate([
         'nome' => 'required|string|max:255',
+        'marca' => 'required|string|max:255', 
         'descricao' => 'required|string',
         'preco' => 'required|numeric|min:0',
         'estoque' => 'required|integer|min:0',
@@ -46,6 +47,7 @@ class ProdutoController extends Controller
 
     $produto = new Produto();
     $produto->nome = $request->input('nome');
+    $produto->marca = $request->input('marca'); 
     $produto->descricao = $request->input('descricao');
     $produto->preco = $request->input('preco');
     $produto->estoque = $request->input('estoque');
@@ -96,9 +98,19 @@ class ProdutoController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+    'nome' => 'required|string|max:255',
+    'marca' => 'required|string|max:255',
+    'descricao' => 'required|string',
+    'preco' => 'required|numeric|min:0',
+    'estoque' => 'required|integer|min:0',  
+    'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
         $produto = Produto::findOrFail($id);
 
         $produto->nome = $request->input('nome');
+        $produto->marca = $request->input('marca'); 
         $produto->descricao = $request->input('descricao');
         $produto->preco = $request->input('preco');
         $produto->estoque = $request->input('estoque');

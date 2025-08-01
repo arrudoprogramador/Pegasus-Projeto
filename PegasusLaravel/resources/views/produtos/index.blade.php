@@ -20,6 +20,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Imagem</th>
+                            <th>Marca</th>
                             <th>Nome</th>
                             <th>Descrição</th>
                             <th>Preço</th>
@@ -36,6 +37,7 @@
                             </td>
                            
                             <td>{{ $p->nome }}</td>
+                            <td>{{ $p->marca }}</td>
                                 <td>{{ $p->descricao }}</td>
                                 <td>R$ {{ number_format($p->preco, 2, ',', '.') }}</td>
                                 <td>

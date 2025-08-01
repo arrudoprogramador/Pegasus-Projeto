@@ -39,6 +39,11 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="Marca" class="form-label">Marca do Produto</label>
+                        <input type="text" name="marca" id="marca" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="descricao" class="form-label">Descrição</label>
                         <textarea name="descricao" id="descricao" rows="3" class="form-control" required></textarea>
                     </div>
