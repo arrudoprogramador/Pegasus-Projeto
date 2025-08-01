@@ -25,6 +25,7 @@
                             <th>Descrição</th>
                             <th>Preço</th>
                             <th>Editar</th>
+                            <th>Favoritar</th>
                             <th>Excluir</th>
                         </tr>
                     </thead>
@@ -48,6 +49,17 @@
                                         </button>
                                     </form>
                                 
+                                </td>
+
+                                <td>
+                                    <!-- Botão favoritar -->
+                                    <form action="{{ route('produto.favoritar', $p->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        <button type="submit" class="btn btn-favoritar"
+                                            style="background-color: <?php echo $p->favoritado ? 'gold' : 'gray'; ?>">                                            ★
+                                        </button>
+
+                                    </form>
                                 </td>
                                 <td>
                                     <form action="{{ route('produto.excluir', $p->id) }}" method="POST">

@@ -47,6 +47,9 @@ use Illuminate\Support\Facades\Route;
         // Cadastrar
         Route::post('/cadastrarFavoritos', [FavoritoController::class, 'store'])->name('favorito.cadastro');
 
+        // Fav
+        Route::post('/produtos/{id}/favoritar', [ProdutoController::class, 'favoritar'])->name('produto.favoritar');
+       
         // Editar
         Route::get('/favorito/{id}', [FavoritoController::class, 'edit'])->name('favorito.edit'); // página
         Route::put('/favorito/{id}/edit', [FavoritoController::class, 'update'])->name('favorito.update');  // ação

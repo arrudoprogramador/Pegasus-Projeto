@@ -13,7 +13,7 @@ export default function Home() {
     const navigation = useNavigation();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [showSearchBar, setShowSearchBar] = useState(false);
-    const [products, setProducts] = useState([]);
+    const [favoritos, setFavoritos] = useState([]);
     const searchInputRef = useRef(null);
     const [loading, setLoading] = useState(true);
 
@@ -41,32 +41,32 @@ export default function Home() {
     ];
 
     useEffect(() => {
-        buscarProdutos();
+        buscarFavoritos();
     }, []);
 
-    const buscarProdutos = async () => {
+    const buscarFavoritos = async () => {
         try {
             setLoading(true);
-            console.log('Iniciando busca de produtos...');
+            console.log('Iniciando busca de favoritos...');
             
-            const response = await fetch(`${apiKey}/api/visualizarProdutos`, {
+            const response = await fetch(`${apiKey}/api/visualizarFavoritos`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
                 },
             });
 
-            if (!response.ok) throw new Error('Erro ao buscar produtos');
+            if (!response.ok) throw new Error('Erro ao buscar favoritos');
 
             const data = await response.json();
-            console.log('✅ Produtos recebidos:', data);
+            console.log('✅ Favoritos recebidos:', data);
 
             // ✅ Corrigido: pega só o array de produtos
-            setProducts(data.data);
+            setFavoritos(data.data);
 
         } catch (error) {
-            console.error('❌ Erro ao buscar produtos:', error);
-            setProducts([]);
+            console.error('❌ Erro ao buscar favoritos:', error);
+            setFavoritos([]);
         } finally {
             setLoading(false);
         }
@@ -89,7 +89,7 @@ export default function Home() {
 
     const botoes = [
         { nome: "Home", imagem: require("../../../assets/homeee.png"), tela: "PerfilProduto" },
-        { nome: "Pesquisar", imagem: require("../../../assets/lupa.png") },
+        { nome: "Pesquisar", imagem: require("../../../assets/lupa.png"), tela: "Pesquisa"},
         { nome: "", imagem: require("../../../assets/sacola.png"), tela: "Carrinho", central: true },
         { nome: "Curtidas", imagem: require("../../../assets/coracao.png"), tela: "Curtidas" },
         { nome: "Usuário", imagem: require("../../../assets/user.png"), tela: (isAuthenticated) ? "Perfil" : "Login"},
@@ -147,12 +147,9 @@ export default function Home() {
                             style={{ alignItems: 'center' }}
                             onPress={() => {
                                 if (item.nome === "Pesquisar") {
-                                    setShowSearchBar(true);
-                                    setTimeout(() => {
-                                        searchInputRef.current?.focus();
-                                    }, 100);
+                                    navigation.navigate("Pesquisa"); // ✅ navega para a tela
                                 } else if (item.tela) {
-                                    navigation.navigate(item.tela);
+                                    navigation.navigate(item.tela); // ✅ usa a tela definida no objeto botoes
                                 }
                             }}
                         >
@@ -215,16 +212,15 @@ export default function Home() {
             {/* Barra de pesquisa fixa */}
             <View style={style.fixedSearchBar}>
             <TextInput
-                ref={searchInputRef}
                 style={style.barraPesquisa}
-                placeholder="Buscar produtos esportivos..."
+                placeholder="O que você procura?"
                 placeholderTextColor="#62a894"
             />
             </View>
 
             {/* FlatList principal */}
             <FlatList
-            data={products} // os produtos vêm do backend
+            data={favoritos} // os produtos vêm do backend
             keyExtractor={(item) => (item.id ? item.id.toString() : Math.random().toString())}
             numColumns={2}
             contentContainerStyle={{ paddingBottom: 100 }}
@@ -358,7 +354,7 @@ export default function Home() {
 
                 {/* FlatList principal */}
                 <FlatList
-                data={products} // os produtos vêm do backend
+                data={favoritos} 
                 keyExtractor={(item) => (item.id ? item.id.toString() : Math.random().toString())}
                 numColumns={2}
                 contentContainerStyle={{ paddingBottom: 100 }}

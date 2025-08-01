@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Favorito;
 use App\Models\Produto;
+use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
@@ -86,6 +88,44 @@ class ProdutoController extends Controller
         return redirect()->route('produtos.index')->with('success', 'Produto cadastrado com sucesso!');
 
     }
+
+    public function favoritar($id)
+    {
+        try {
+            $produto = Produto::findOrFail($id);
+            
+            // Verifica se já está favoritado
+            $jaFavoritado = Favorito::where('produto_id', $produto->id)->exists();
+            
+            if (!$jaFavoritado) {
+                // Cria o registro na tabela favoritos
+                Favorito::create([
+                    'produto_id' => $produto->id,
+                    'nome' => $produto->nome,
+                    'descricao' => $produto->descricao,
+                    'preco' => $produto->preco,
+                    'foto' => $produto->foto,  // Alterado de 'imagem' para 'foto' para manter padrão
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+                
+                $message = 'Produto adicionado aos favoritos!';
+                $alertType = 'success';
+            } else {
+                // Remove dos favoritos
+                Favorito::where('produto_id', $produto->id)->delete();
+                
+                $message = 'Produto removido dos favoritos!';
+                $alertType = 'info';
+            }
+            
+            return back()->with($alertType, $message);
+            
+        } catch (\Exception $e) {
+            return back()->with('error', 'Ocorreu um erro: ' . $e->getMessage());
+        }
+    }
+
 
     public function edit($id)
     {
