@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView  } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import style from './style.js';
@@ -111,20 +111,24 @@ const adicionarAoCarrinho = async () => {
 
 
       {/* Rodapé */}
-      <View style={style.footer}>
-        <View style={style.rating}>
-          <Text style={style.stars}>★ ★ ★ ★ ☆</Text>
-          <Text style={style.ratingText}>{product.avaliacao || '4.0'}</Text>
-        </View>
+<View style={style.footer}>
+  <View style={style.rating}>
+    <Text style={style.stars}>★ ★ ★ ★ ☆</Text>
+    <Text style={style.ratingText}>{product.avaliacao || '4.0'}</Text>
+  </View>
 
-<Text style={style.price}>
-  R$ {product.preco ? Number(product.preco).toFixed(2) : '0.00'}
-</Text>
+  <Text style={style.price}>
+    R$ {product.preco ? Number(product.preco).toFixed(2) : '0.00'}
+  </Text>
+</View>
 
-        <TouchableOpacity style={style.addButton} onPress={adicionarAoCarrinho}>
-          <Text style={style.plus}>+</Text>
-        </TouchableOpacity>
-      </View>
+<View style={style.fixedCartButtonWrapper}>
+  <TouchableOpacity style={style.addToCartButton} onPress={adicionarAoCarrinho}>
+    <Text style={style.addToCartText}>Adicionar ao carrinho</Text>
+  </TouchableOpacity>
+</View>
+
+
     </View>
 
 

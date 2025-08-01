@@ -6,6 +6,7 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
     paddingTop: 50,
     paddingHorizontal: 20,
+    
   },
   header: {
     flexDirection: 'row',
@@ -124,14 +125,7 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
-  addButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#00d3aa',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
   plus: {
     fontSize: 20,
     color: '#fff',
@@ -193,6 +187,34 @@ closeButton: {
   color: '#e74c3c',
   paddingHorizontal: 10,
   paddingVertical: 5,
+},
+
+cartButtonWrapper: {
+  marginTop: 20,
+  alignItems: 'center',
+  marginBottom: 40, // espaço extra no final
+},
+
+addToCartButton: {
+  backgroundColor: '#00d3aa',
+  paddingVertical: 14,
+  paddingHorizontal: 32,
+  borderRadius: 30,
+},
+
+addToCartText: {
+  color: '#fff',
+  fontSize: 16,
+  fontWeight: 'bold',
+},
+
+fixedCartButtonWrapper: {
+  position: 'absolute',
+  bottom: 20,
+  left: 20,
+  right: 20,
+  alignItems: 'center',
+  zIndex: 10,
 },
 
 
