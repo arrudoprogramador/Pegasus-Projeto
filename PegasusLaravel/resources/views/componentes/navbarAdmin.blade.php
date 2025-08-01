@@ -39,7 +39,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/cadastrarFavoritos')}}" onclick="ativarLink(this)">
+                    <a class="nav-link" href="{{ url('/visualizarFavoritos')}}" onclick="ativarLink(this)">
                         <i class="bi bi-star-fill text-warning"></i> Ver Favoritos
                     </a>
                 </li>
