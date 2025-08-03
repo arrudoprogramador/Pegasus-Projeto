@@ -140,7 +140,7 @@ class ProdutoController extends Controller
     {
         $request->validate([
     'nome' => 'required|string|max:255',
-    'marca' => 'required|string|max:255',
+    'marca_id' => 'required|exists:marcas,id',
     'descricao' => 'required|string',
     'preco' => 'required|numeric|min:0',
     'estoque' => 'required|integer|min:0',  
@@ -150,7 +150,7 @@ class ProdutoController extends Controller
         $produto = Produto::findOrFail($id);
 
         $produto->nome = $request->input('nome');
-        $produto->marca = $request->input('marca'); 
+        $produto->marca = $request->input('marca_id'); 
         $produto->descricao = $request->input('descricao');
         $produto->preco = $request->input('preco');
         $produto->estoque = $request->input('estoque');

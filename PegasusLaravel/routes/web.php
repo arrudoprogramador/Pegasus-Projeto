@@ -3,6 +3,9 @@
 use App\Http\Controllers\FavoritoController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\VariacaoProdutoController;
+use App\Http\Controllers\CorController;
 use Illuminate\Support\Facades\Route;
 
     // Página inicial
@@ -63,5 +66,18 @@ use Illuminate\Support\Facades\Route;
 
         // Excluir
         Route::delete('/excluirUsuario/{id}', [UsuarioController::class, 'destroy'])->name('usuario.excluir');
+
+    // Area de marcas
+
+        Route::resource('marcas', MarcaController::class);
+
+    // Area de variacao de produtos
+
+        Route::resource('variacoes', VariacaoProdutoController::class);
+
+    // Area de cores
+        Route::resource('cores', CorController::class);
+
+
 
 ?>
