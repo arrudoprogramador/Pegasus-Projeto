@@ -15,19 +15,23 @@ class VariacaoProduto extends Model
         'cor_id',
         'preco',
         'estoque',
-        'sku'
+        'sku',
+        'foto',
     ];
 
+    // Relação com Produto
     public function produto()
     {
         return $this->belongsTo(Produto::class);
     }
 
+    // Relação com Tamanho
     public function tamanho()
     {
         return $this->belongsTo(Tamanho::class);
     }
 
+    // Relação com Cor
     public function cor()
     {
         return $this->belongsTo(Cor::class);

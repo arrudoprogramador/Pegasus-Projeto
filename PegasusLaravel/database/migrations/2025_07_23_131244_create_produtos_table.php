@@ -15,10 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->text('descricao')->nullable();
-            $table->decimal('preco', 8, 2);
-            $table->integer('estoque')->default(0);
             $table->foreignId('marca_id')->constrained('marcas')->onDelete('cascade');
-            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }

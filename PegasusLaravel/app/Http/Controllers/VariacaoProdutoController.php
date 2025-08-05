@@ -18,7 +18,7 @@ class VariacaoProdutoController extends Controller
     // Exibe o formulário para criar nova variação
     public function create()
     {
-        $produtos = Produto::all(); // Para escolher qual produto a variação pertence
+        $produtos = Produto::all();
         return view('variacoes.create', compact('produtos'));
     }
 
@@ -30,8 +30,26 @@ class VariacaoProdutoController extends Controller
             'cor' => 'nullable|string|max:255',
             'tamanho' => 'nullable|string|max:255',
             'estoque' => 'required|integer|min:0',
-            'preco' => 'nullable|numeric|min:0',
+            'preco' => 'required|numeric|min:0',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        $fotoPath = null;
+
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+
+            if ($file->isValid()) {
+                $directory = public_path('img/variacoes');
+                if (!file_exists($directory)) {
+                    mkdir($directory, 0777, true);
+                }
+
+                $fileName = time() . '.' . $file->getClientOriginalExtension();
+                $file->move($directory, $fileName);
+                $fotoPath = $fileName;
+            }
+        }
 
         VariacaoProduto::create([
             'produto_id' => $request->input('produto_id'),
@@ -39,6 +57,7 @@ class VariacaoProdutoController extends Controller
             'tamanho' => $request->input('tamanho'),
             'estoque' => $request->input('estoque'),
             'preco' => $request->input('preco'),
+            'foto' => $fotoPath,
         ]);
 
         return redirect()->route('variacoes.index')->with('success', 'Variação criada com sucesso!');
@@ -60,10 +79,27 @@ class VariacaoProdutoController extends Controller
             'cor' => 'nullable|string|max:255',
             'tamanho' => 'nullable|string|max:255',
             'estoque' => 'required|integer|min:0',
-            'preco' => 'nullable|numeric|min:0',
+            'preco' => 'required|numeric|min:0',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $variacao = VariacaoProduto::findOrFail($id);
+
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+
+            if ($file->isValid()) {
+                $directory = public_path('img/variacoes');
+                if (!file_exists($directory)) {
+                    mkdir($directory, 0777, true);
+                }
+
+                $fileName = time() . '.' . $file->getClientOriginalExtension();
+                $file->move($directory, $fileName);
+                $variacao->foto = $fileName;
+            }
+        }
+
         $variacao->produto_id = $request->input('produto_id');
         $variacao->cor = $request->input('cor');
         $variacao->tamanho = $request->input('tamanho');

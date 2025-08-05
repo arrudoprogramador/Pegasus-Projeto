@@ -13,25 +13,22 @@ class Produto extends Model
     protected $fillable = [
         'nome',
         'descricao',
-        'preco',
-        'estoque',
-        'foto',
         'marca_id',
     ];
 
-    // Relacionamento: Produto pertence a uma Marca
+    // Produto pertence a uma Marca
     public function marca()
     {
         return $this->belongsTo(Marca::class);
     }
 
-    // Relacionamento: Produto tem muitas Variações
+    // Produto tem muitas variações
     public function variacoes()
     {
         return $this->hasMany(VariacaoProduto::class);
     }
 
-    // Indica se está favoritado (do jeito que você já tinha)
+    // Retorna se o produto está favoritado
     public function getFavoritadoAttribute()
     {
         return DB::table('favoritos')->where('produto_id', $this->id)->exists();

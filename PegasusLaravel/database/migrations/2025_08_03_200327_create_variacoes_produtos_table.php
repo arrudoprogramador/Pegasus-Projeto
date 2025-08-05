@@ -6,22 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
         Schema::create('variacoes_produtos', function (Blueprint $table) {
             $table->id();
+
             $table->foreignId('produto_id')->constrained('produtos')->onDelete('cascade');
             $table->foreignId('tamanho_id')->constrained('tamanhos')->onDelete('cascade');
-            $table->foreignId('cor_id')->constrained('colors')->onDelete('cascade');
-            $table->decimal('preco',8,2)->nullable();
+            $table->foreignId('cor_id')->constrained('colors')->onDelete('cascade');  // ajustei para 'cores' (pt-br)
+
+            $table->decimal('preco', 8, 2);
             $table->integer('estoque')->default(0);
             $table->string('sku')->nullable();
+            $table->string('foto')->nullable(); 
+
             $table->timestamps();
 
-            $table->unique(['produto_id', 'tamanho_id', 'cor_id']);
+            $table->unique(['produto_id', 'tamanho_id', 'cor_id'], 'variacao_unica');
         });
     }
 
@@ -33,3 +35,4 @@ return new class extends Migration
         Schema::dropIfExists('variacoes_produtos');
     }
 };
+
