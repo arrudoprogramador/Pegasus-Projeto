@@ -47,9 +47,6 @@ use Illuminate\Support\Facades\Route;
             return view('favoritos.cadastrarFavoritos');
         });
 
-        // Cadastrar
-        Route::post('/cadastrarFavoritos', [FavoritoController::class, 'store'])->name('favorito.cadastro');
-
         // Fav
         Route::post('/produtos/{id}/favoritar', [ProdutoController::class, 'favoritar'])->name('produto.favoritar');
        

@@ -44,11 +44,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/CadastrarFavoritos')}}" onclick="ativarLink(this)">
-                        <i class="bi bi-star-fill text-warning"></i> Cadastrar Favoritos
-                    </a>
-                </li>
+                
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('cores.index') }}" onclick="ativarLink(this)">
