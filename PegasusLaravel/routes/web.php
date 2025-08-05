@@ -7,6 +7,7 @@ use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\VariacaoProdutoController;
 use App\Http\Controllers\CorController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TamanhoController;
 
     // Página inicial
     Route::get('/', function () {
@@ -75,6 +76,8 @@ use Illuminate\Support\Facades\Route;
     // Area de cores
         Route::resource('cores', CorController::class);
 
+    // Area de tamanhos
+    Route::resource('tamanhos', TamanhoController::class);
 
 
 ?>

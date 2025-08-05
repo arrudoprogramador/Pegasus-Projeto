@@ -57,6 +57,20 @@
                         <i class="bi bi-plus-circle-fill text-danger"></i> Cadastrar Cor
                     </a>
                 </li>
+
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('tamanhos.index') }}" onclick="ativarLink(this)">
+                        <i class="bi bi-palette-fill text-danger"></i> Ver Tamanhos
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('tamanhos.create') }}" onclick="ativarLink(this)">
+                        <i class="bi bi-plus-circle-fill text-danger"></i> Cadastrar Tamanhos
+                    </a>
+                </li>
             </ul>
 
             <span class="navbar-text">
