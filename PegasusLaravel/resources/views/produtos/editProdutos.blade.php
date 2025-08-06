@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Produto</title>
-    <link rel="stylesheet" href="{{url('/css/editarProduto.css')}}">
+    <link rel="stylesheet" href="{{ url('/css/editarProduto.css') }}">
 </head>
 <body>
 
@@ -22,36 +22,32 @@
             <label for="nome">Nome</label>
             <input type="text" id="nome" name="nome" value="{{ old('nome', $produto->nome) }}" required>
 
-            <label for="marca">Marca</label>
-            <input type="text" id="marca" name="marca" value="{{ old('marca', $produto->marca) }}" required>
+            <label for="marca_id">Marca</label>
+            <select id="marca_id" name="marca_id" required>
+                <option value="">Selecione uma marca</option>
+                @foreach($marcas as $marca)
+                    <option value="{{ $marca->id }}" {{ $marca->id == old('marca_id', $produto->marca_id) ? 'selected' : '' }}>
+                        {{ $marca->nome }}
+                    </option>
+                @endforeach
+            </select>
 
             <label for="descricao">Descrição</label>
             <textarea id="descricao" name="descricao" rows="4" required>{{ old('descricao', $produto->descricao) }}</textarea>
-
-            <label for="preco">Preço</label>
-            <input type="text" id="preco" name="preco" value="{{ old('preco', $produto->preco) }}" required>
-
-            <label for="estoque">Estoque</label>
-            <input type="number" id="estoque" name="estoque" value="{{ old('estoque', $produto->estoque) }}" required>
 
             <label for="foto">Nova Foto</label>
             <input type="file" id="foto" name="foto" accept="image/*">
 
             <div class="img-preview">
                 <p>Foto atual:</p>
-                    <img id="preview" src="{{ $produto->foto ? asset('img/produtos/' . $produto->foto) : asset('img/produtos/default.jpg') }}" alt="Imagem do produto" width="100" height="100">
+                <img id="preview" src="{{ $produto->foto ? asset('img/produtos/' . $produto->foto) : asset('img/produtos/default.jpg') }}" alt="Imagem do produto" width="100" height="100">
             </div>
 
             <button type="submit">Salvar Alterações</button>
         </form>
     </div>
 
-</body>
-
-<script>
-        
-
-        // Atualizar a imagem de pré-visualização quando o usuário selecionar uma imagem
+    <script>
         document.getElementById('foto').addEventListener('change', function(event) {
             const file = event.target.files[0];
             const preview = document.getElementById('preview');
@@ -64,4 +60,5 @@
             }
         });
     </script>
+</body>
 </html>

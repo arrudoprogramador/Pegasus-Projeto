@@ -19,28 +19,21 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Imagem</th>
                             <th>Marca</th>
                             <th>Nome</th>
                             <th>Descrição</th>
-                            <th>Preço</th>
                             <th>Editar</th>
                             <th>Favoritar</th>
                             <th>Excluir</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($produtos as $p)
-                            <tr>
-                            <td>{{ $p->id }}</td>
-                            <td>
-                                <img src="{{ $p->foto ? asset('img/produtos/' . $p->foto) : asset('img/produtos/default.jpg') }}" alt="Imagem do produto" width="84" height="75" style="border-radius: 15%;">
-                            </td>
-                           
-                            <td>{{ $p->nome }}</td>
-                            <td>{{ $p->marca }}</td>
-                                <td>{{ $p->descricao }}</td>
-                                <td>R$ {{ number_format($p->preco, 2, ',', '.') }}</td>
+                       @foreach($produtos as $p)
+                                <tr>
+                                    <td>{{ $p->id }}</td>
+                                    <td>{{ $p->marca->name }}</td>
+                                    <td>{{ $p->nome }}</td>
+                                    <td>{{ $p->descricao }}</td>
                                 <td>
                                     <form action="{{ route('produto.edit', $p->id) }}">
                                         @csrf

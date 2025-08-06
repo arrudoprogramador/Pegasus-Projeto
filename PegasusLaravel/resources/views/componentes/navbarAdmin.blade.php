@@ -58,8 +58,6 @@
                     </a>
                 </li>
 
-
-
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('tamanhos.index') }}" onclick="ativarLink(this)">
                         <i class="bi bi-palette-fill text-danger"></i> Ver Tamanhos
@@ -69,6 +67,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('tamanhos.create') }}" onclick="ativarLink(this)">
                         <i class="bi bi-plus-circle-fill text-danger"></i> Cadastrar Tamanhos
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('marcas.index') }}" onclick="ativarLink(this)">
+                        <i class="bi bi-palette-fill text-danger"></i> Ver Marcas
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('marcas.create') }}" onclick="ativarLink(this)">
+                        <i class="bi bi-plus-circle-fill text-danger"></i> Cadastrar Marcas
                     </a>
                 </li>
             </ul>

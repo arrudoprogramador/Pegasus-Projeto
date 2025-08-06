@@ -26,9 +26,9 @@ use App\Http\Controllers\TamanhoController;
     // Area de Produtos    
         Route::get('/visualizarProdutos', [ProdutoController::class, 'index'])->name('produtos.index');
 
-        Route::get('/telaCadastroProdutos', function () {
-            return view('produtos.cadastrarProdutos');
-        });
+        Route::get('/telaCadastroProdutos', [ProdutoController::class, 'create'])->name('produtos.create');
+
+        Route::post('/produtos', [ProdutoController::class, 'store'])->name('produtos.store');
 
         // Cadastrar
         Route::post('/cadastrarProdutos', [ProdutoController::class, 'store'])->name('produto.cadastro');
@@ -65,6 +65,9 @@ use App\Http\Controllers\TamanhoController;
         // Excluir
         Route::delete('/excluirUsuario/{id}', [UsuarioController::class, 'destroy'])->name('usuario.excluir');
 
+
+
+        
     // Area de marcas
 
         Route::resource('marcas', MarcaController::class);

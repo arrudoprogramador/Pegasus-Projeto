@@ -30,7 +30,8 @@
                     </div>
                 @endif
 
-                <form action="{{ route('produto.cadastro') }}" method="POST" enctype="multipart/form-data">
+                {{-- Atualize aqui com a rota correta usada no ProdutoController --}}
+                <form action="{{ route('produtos.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="mb-3">
@@ -39,28 +40,18 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="Marca" class="form-label">Marca do Produto</label>
-                        <input type="text" name="marca" id="marca" class="form-control" required>
+                        <label for="marca_id" class="form-label">Marca do Produto</label>
+                            <select name="marca_id" id="marca_id" class="form-control" required>
+                                <option value="">Selecione uma marca</option>
+                                @foreach ($marcas as $marca)
+                                    <option value="{{ $marca->id }}">{{ $marca->name }}</option>
+                                @endforeach
+                            </select>
                     </div>
 
                     <div class="mb-3">
                         <label for="descricao" class="form-label">Descrição</label>
                         <textarea name="descricao" id="descricao" rows="3" class="form-control" required></textarea>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="preco" class="form-label">Preço</label>
-                        <input type="number" name="preco" id="preco" step="0.01" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="estoque" class="form-label">Estoque</label>
-                        <input type="number" name="estoque" id="estoque" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <input type="file" name="foto" id="fotoInput" accept="image/*" required>
-                        <img id="preview" class="preview-img" src="#" alt="Pré-visualização" style="display: none;"/>
                     </div>
 
                     <div class="text-end">
@@ -73,27 +64,8 @@
         </div>
     </div>
 
-    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script>
-        document.getElementById('fotoInput').addEventListener('change', function (event) {
-        const preview = document.getElementById('preview');
-        const file = event.target.files[0];
-
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-            preview.src = e.target.result;
-            preview.style.display = 'block';
-            }
-            reader.readAsDataURL(file);
-        } else {
-            preview.style.display = 'none';
-        }
-        });
-  </script>
 
 </body>
 </html>

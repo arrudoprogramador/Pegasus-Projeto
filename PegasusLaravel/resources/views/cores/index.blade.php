@@ -38,7 +38,7 @@
                 @forelse($cores as $cor)
                     <tr>
                         <td>{{ $cor->id }}</td>
-                        <td>{{ $cor->nome }}</td>
+                        <td>{{ $cor->name }}</td>
                         <td>
                             <a href="{{ route('cores.edit', $cor->id) }}" class="btn btn-warning btn-sm">
                                 <i class="fas fa-edit"></i>

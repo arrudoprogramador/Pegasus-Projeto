@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Favorito;
 use App\Models\Produto;
 use Illuminate\Http\Request;
+use App\Models\Marca;  
 
 class ProdutoController extends Controller
 {
@@ -14,6 +15,12 @@ class ProdutoController extends Controller
         $produtos = Produto::all();
         return view('produtos.index', compact('produtos'));
     }
+
+    public function create()
+{
+    $marcas = Marca::all();
+    return view('produtos.cadastrarProdutos', compact('marcas'));
+}
 
     // Lista produtos (API)
     public function indexApi()
