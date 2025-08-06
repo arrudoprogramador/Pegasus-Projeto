@@ -1,107 +1,124 @@
-<!-- Navbar do admin -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo</title>
+    <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
-    <div class="container-fluid">
-        <a class="navbar-brand fw-bold text-primary" href="#">Pegasus</a>
+    <!-- Bootstrap e Ícones -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarConteudo" aria-controls="navbarConteudo"
-                aria-expanded="false" aria-label="Alternar navegação">
-            <span class="navbar-toggler-icon"></span>
+
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <button class="btn btn-outline-secondary toggle-btn" id="toggleSidebar">
+            <i class="bi bi-list"></i>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarConteudo">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a href="{{ url('/') }}" class="nav-link px-3">
+                    <i class="bi bi-house-door-fill text-success"></i>
+                    <span>Início</span>
+                </a>
+            </li>
 
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ url('/')}}" onclick="ativarLink(this)">
-                        <i class="bi bi-house-door-fill text-success"></i> Início
-                    </a>
-                </li>
+            <!-- Produtos -->
+            <li class="nav-item">
+            <a class="nav-link px-3" data-bs-toggle="collapse" data-bs-target="#produtosMenu" role="button" aria-expanded="false" aria-controls="produtosMenu">
+                    <i class="bi bi-box-seam text-primary"></i>
+                    <span>Produtos</span>
+                </a>
+                <div class="collapse submenu" id="produtosMenu">
+                    <a href="{{ url('/visualizarProdutos') }}" class="nav-link px-4">Ver Produtos</a>
+                    <a href="{{ url('/telaCadastroProdutos') }}" class="nav-link px-4">Cadastrar Produto</a>
+                </div>
+            </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/visualizarProdutos')}}" onclick="ativarLink(this)">
-                        <i class="bi bi-box-seam text-primary"></i> Ver Produtos
-                    </a>
-                </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/telaCadastroProdutos')}}" onclick="ativarLink(this)">
-                        <i class="bi bi-box-seam text-primary"></i> Cadastrar Produtos
-                    </a>
-                </li>
+            <!-- Marcas -->
+            <li class="nav-item">
+                <a href="#marcasMenu" class="nav-link px-3" data-bs-toggle="collapse">
+                    <i class="bi bi-tags-fill text-danger"></i>
+                    <span>Marcas</span>
+                </a>
+                <div class="collapse submenu" id="marcasMenu">
+                    <a href="{{ route('marcas.index') }}" class="nav-link px-4">Ver Marcas</a>
+                    <a href="{{ route('marcas.create') }}" class="nav-link px-4">Cadastrar Marca</a>
+                </div>
+            </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/visualizarUsuarios')}}" onclick="ativarLink(this)">
-                        <i class="bi bi-people-fill text-success"></i> Ver Usuários
-                    </a>
-                </li>
+            <!-- Cores -->
+            <li class="nav-item">
+                <a href="#coresMenu" class="nav-link px-3" data-bs-toggle="collapse">
+                    <i class="bi bi-palette-fill text-warning"></i>
+                    <span>Cores</span>
+                </a>
+                <div class="collapse submenu" id="coresMenu">
+                    <a href="{{ route('cores.index') }}" class="nav-link px-4">Ver Cores</a>
+                    <a href="{{ route('cores.create') }}" class="nav-link px-4">Cadastrar Cor</a>
+                </div>
+            </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/visualizarFavoritos')}}" onclick="ativarLink(this)">
-                        <i class="bi bi-star-fill text-warning"></i> Ver Favoritos
-                    </a>
-                </li>
+            <!-- Tamanhos -->
+            <li class="nav-item">
+                <a href="#tamanhosMenu" class="nav-link px-3" data-bs-toggle="collapse">
+                    <i class="bi bi-arrows-angle-expand text-info"></i>
+                    <span>Tamanhos</span>
+                </a>
+                <div class="collapse submenu" id="tamanhosMenu">
+                    <a href="{{ route('tamanhos.index') }}" class="nav-link px-4">Ver Tamanhos</a>
+                    <a href="{{ route('tamanhos.create') }}" class="nav-link px-4">Cadastrar Tamanho</a>
+                </div>
+            </li>
 
-                
+            <!-- Usuários -->
+            <li class="nav-item">
+                <a href="{{ url('/visualizarUsuarios') }}" class="nav-link px-3">
+                    <i class="bi bi-people-fill text-secondary"></i>
+                    <span>Usuários</span>
+                </a>
+            </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('cores.index') }}" onclick="ativarLink(this)">
-                        <i class="bi bi-palette-fill text-danger"></i> Ver Cores
-                    </a>
-                </li>
+            <!-- Favoritos -->
+            <li class="nav-item">
+                <a href="{{ url('/visualizarFavoritos') }}" class="nav-link px-3">
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <span>Favoritos</span>
+                </a>
+            </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('cores.create') }}" onclick="ativarLink(this)">
-                        <i class="bi bi-plus-circle-fill text-danger"></i> Cadastrar Cor
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('tamanhos.index') }}" onclick="ativarLink(this)">
-                        <i class="bi bi-palette-fill text-danger"></i> Ver Tamanhos
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('tamanhos.create') }}" onclick="ativarLink(this)">
-                        <i class="bi bi-plus-circle-fill text-danger"></i> Cadastrar Tamanhos
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('marcas.index') }}" onclick="ativarLink(this)">
-                        <i class="bi bi-palette-fill text-danger"></i> Ver Marcas
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('marcas.create') }}" onclick="ativarLink(this)">
-                        <i class="bi bi-plus-circle-fill text-danger"></i> Cadastrar Marcas
-                    </a>
-                </li>
-            </ul>
-
-            <span class="navbar-text">
-                <button class="btn btn-outline-primary btn-sm" onclick="alert('Saindo...')">
-                    Sair
-                </button>
-            </span>
-        </div>
+            <!-- Sair -->
+            <li class="nav-item">
+                <a href="#" onclick="alert('Saindo...')" class="nav-link px-3">
+                    <i class="bi bi-box-arrow-right text-danger"></i>
+                    <span>Sair</span>
+                </a>
+            </li>
+        </ul>
     </div>
-</nav>
 
-<script>
-    function ativarLink(elemento) {
-        // Remove 'active' de todos os links
-        const links = document.querySelectorAll('.navbar-nav .nav-link');
-        links.forEach(link => link.classList.remove('active'));
+    <!-- Conteúdo Principal -->
+    <div class="main-content" id="mainContent">
+        @yield('content')
+    </div>
 
-        // Adiciona 'active' ao link clicado
-        elemento.classList.add('active');
-    }
-</script>
-
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
 
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('expanded');
+            mainContent.classList.toggle('expanded');
+        });
+    </script>
+
+</body>
+</html>
