@@ -1,6 +1,20 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Variação</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/cadastroProdutos.css') }}">
+</head>
+<body class="bg-light">
 
-@section('content')
+    <header>
+        @include('componentes.navbarAdmin')
+    </header>
+
 <div class="container py-5">
     <div class="card shadow-sm border-0">
         <div class="card-header bg-primary text-white fw-bold">
@@ -29,9 +43,9 @@
                     @foreach($variacoes as $v)
                         <tr>
                             <td>{{ $v->id }}</td>
-                            <td>{{ $v->produto->name }}</td>
-                            <td>{{ $v->cor }}</td>
-                            <td>{{ $v->tamanho }}</td>
+                            <td>{{ $v->produto->nome }}</td>
+                            <td>{{ $v->cor->nome }}</td>
+                            <td>{{ $v->tamanho->nome }}</td>
                             <td>{{ $v->estoque }}</td>
                             <td>R$ {{ number_format($v->preco, 2, ',', '.') }}</td>
                             <td>
@@ -63,4 +77,4 @@
         </div>
     </div>
 </div>
-@endsection
+

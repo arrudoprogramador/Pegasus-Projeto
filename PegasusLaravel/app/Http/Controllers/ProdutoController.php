@@ -98,7 +98,8 @@ class ProdutoController extends Controller
     public function edit($id)
     {
         $produto = Produto::findOrFail($id);
-        return view('produtos.editProdutos', compact('produto'));
+        $marcas = Marca::all();
+        return view('produtos.editProdutos', compact('produto', 'marcas'));
     }
 
     // Atualiza produto
@@ -111,6 +112,7 @@ class ProdutoController extends Controller
         ]);
 
         $produto = Produto::findOrFail($id);
+        
         $produto->nome = $request->input('nome');
         $produto->marca_id = $request->input('marca_id');
         $produto->descricao = $request->input('descricao');

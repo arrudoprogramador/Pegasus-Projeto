@@ -9,8 +9,8 @@ class Cor extends Model
 {
     use HasFactory;
     
-    protected $table = 'colors'; // nome da tabela em inglês
-    protected $fillable = ['name', 'hex_code'];
+    protected $table = 'cores'; 
+    protected $fillable = ['nome', 'hex_code'];
 
     public function variacoes()
     {

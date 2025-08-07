@@ -80,8 +80,8 @@ class VariacaoProdutoController extends Controller
     {
         $request->validate([
             'produto_id' => 'required|exists:produtos,id',
-            'cor' => 'nullable|string|max:255',
-            'tamanho' => 'nullable|string|max:255',
+            'cor_id' => 'nullable|exists:cores,id',
+            'tamanho_id' => 'nullable|exists:tamanhos,id',
             'estoque' => 'required|integer|min:0',
             'preco' => 'required|numeric|min:0',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -105,8 +105,8 @@ class VariacaoProdutoController extends Controller
         }
 
         $variacao->produto_id = $request->input('produto_id');
-        $variacao->cor = $request->input('cor');
-        $variacao->tamanho = $request->input('tamanho');
+        $variacao->cor_id = $request->input('cor_id');
+        $variacao->tamanho_id = $request->input('tamanho_id');
         $variacao->estoque = $request->input('estoque');
         $variacao->preco = $request->input('preco');
         $variacao->save();

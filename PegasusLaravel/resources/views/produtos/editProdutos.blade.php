@@ -35,13 +35,7 @@
             <label for="descricao">Descrição</label>
             <textarea id="descricao" name="descricao" rows="4" required>{{ old('descricao', $produto->descricao) }}</textarea>
 
-            <label for="foto">Nova Foto</label>
-            <input type="file" id="foto" name="foto" accept="image/*">
-
-            <div class="img-preview">
-                <p>Foto atual:</p>
-                <img id="preview" src="{{ $produto->foto ? asset('img/produtos/' . $produto->foto) : asset('img/produtos/default.jpg') }}" alt="Imagem do produto" width="100" height="100">
-            </div>
+            
 
             <button type="submit">Salvar Alterações</button>
         </form>

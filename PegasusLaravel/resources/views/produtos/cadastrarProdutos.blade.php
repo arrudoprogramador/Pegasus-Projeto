@@ -30,7 +30,6 @@
                     </div>
                 @endif
 
-                {{-- Atualize aqui com a rota correta usada no ProdutoController --}}
                 <form action="{{ route('produtos.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
@@ -44,7 +43,7 @@
                             <select name="marca_id" id="marca_id" class="form-control" required>
                                 <option value="">Selecione uma marca</option>
                                 @foreach ($marcas as $marca)
-                                    <option value="{{ $marca->id }}">{{ $marca->name }}</option>
+                                    <option value="{{ $marca->id }}">{{ $marca->nome }}</option>
                                 @endforeach
                             </select>
                     </div>

@@ -38,7 +38,7 @@
                 @forelse($tamanhos as $tamanho)
                     <tr>
                         <td>{{ $tamanho->id }}</td>
-                        <td>{{ $tamanho->name }}</td>
+                        <td>{{ $tamanho->nome }}</td>
                         <td>
                             <a href="{{ route('tamanhos.edit', $tamanho->id) }}" class="btn btn-warning btn-sm">
                                 <i class="fas fa-edit"></i>

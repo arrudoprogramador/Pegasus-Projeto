@@ -4,36 +4,36 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class VariacaoProduto extends Model
 {
-    use HasFactory;
+    use SoftDeletes;
+    protected $table = 'variacoes_produto';
+    protected $fillable = ['produto_id', 'cor_id', 'tamanho_id', 
+                            'estoque', 'preco', 'sku', 'ativo', 'foto',];
 
-    protected $fillable = [
-        'produto_id',
-        'tamanho_id',
-        'cor_id',
-        'preco',
-        'estoque',
-        'sku',
-        'foto',
-    ];
-
-    // Relação com Produto
-    public function produto()
-    {
+    public function produto() {
         return $this->belongsTo(Produto::class);
     }
 
-    // Relação com Tamanho
-    public function tamanho()
-    {
-        return $this->belongsTo(Tamanho::class, 'tamanho_id');
+    public function cor() {
+        return $this->belongsTo(Cor::class);
     }
 
-    // Relação com Cor
-    public function cor()
-    {
-        return $this->belongsTo(Cor::class, 'cor_id');
+    public function tamanho() {
+        return $this->belongsTo(Tamanho::class);
+    }
+
+    public function imagens() {
+        return $this->hasMany(ImagemVariacao::class);
+    }
+
+    public function promocaoAtual() {
+        return $this->hasOne(Promocao::class)
+            ->whereDate('inicio', '<=', now())
+            ->where(function ($query) {
+                $query->whereNull('fim')->orWhereDate('fim', '>=', now());
+            });
     }
 }

@@ -40,7 +40,7 @@
                         <select name="produto_id" class="form-control" required>
                             <option value="">Selecione um produto</option>
                             @foreach($produtos as $produto)
-                                <option value="{{ $produto->id }}">{{ $produto->name }}</option>
+                                <option value="{{ $produto->id }}">{{ $produto->nome }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -50,7 +50,7 @@
                         <select name="tamanho_id" id="tamanho_id" class="form-control" required>
                             <option value="">Selecione um tamanho</option>
                             @foreach($tamanhos as $tamanho)
-                                <option value="{{ $tamanho->id }}">{{ $tamanho->name }}</option>
+                                <option value="{{ $tamanho->id }}">{{ $tamanho->nome }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -61,7 +61,7 @@
                         <select name="cor_id" id="cor_id" class="form-control" required>
                             <option value="">Selecione uma cor</option>
                             @foreach($cores as $cor)
-                                <option value="{{ $cor->id }}">{{ $cor->name }}</option>
+                                <option value="{{ $cor->id }}">{{ $cor->nome }}</option>
                             @endforeach
                         </select>
                     </div>

@@ -15,9 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->text('descricao')->nullable();
-            $table->foreignId('marca_id')->constrained('marcas')->onDelete('cascade');
+            $table->unsignedBigInteger('marca_id')->nullable();
+            $table->string('imagem_capa')->nullable();
+            $table->boolean('ativo')->default(true);
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('marca_id')->references('id')->on('marcas')->onDelete('set null');
         });
+
     }
 
     /**
@@ -25,6 +31,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('variacoes_produto'); // ou qualquer tabela que tenha FK para produtos
         Schema::dropIfExists('produtos');
     }
+
 };

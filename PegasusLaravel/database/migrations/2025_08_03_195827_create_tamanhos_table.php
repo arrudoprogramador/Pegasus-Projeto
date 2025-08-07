@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tamanhos', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Ex: P, M, G, 40, 41
+            $table->string('nome'); // Ex: P, M, G, 40, 41
             $table->timestamps();
         });
     }

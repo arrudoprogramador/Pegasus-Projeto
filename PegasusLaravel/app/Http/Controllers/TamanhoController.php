@@ -30,11 +30,11 @@ class TamanhoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'nome' => 'required|string|max:255',
         ]);
 
         Tamanho::create([
-            'name' => $request->input('name'),
+            'nome' => $request->input('nome'),
         ]);
 
         return redirect()->route('tamanhos.index')->with('success', 'Tamanho cadastrado com sucesso.');
@@ -63,12 +63,12 @@ class TamanhoController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'nome' => 'required|string|max:255',
         ]);
 
         $tamanho = Tamanho::findOrFail($id);
         $tamanho->update([
-            'name' => $request->input('name'),
+            'nome' => $request->input('nome'),
         ]);
 
         return redirect()->route('tamanhos.index')->with('success', 'Tamanho atualizado com sucesso.');

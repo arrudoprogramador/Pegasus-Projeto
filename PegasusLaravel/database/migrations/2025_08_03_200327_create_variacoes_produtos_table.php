@@ -9,22 +9,24 @@ return new class extends Migration
 
     public function up(): void
     {
-        Schema::create('variacoes_produtos', function (Blueprint $table) {
+        Schema::create('variacoes_produto', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('produto_id')->constrained('produtos')->onDelete('cascade');
-            $table->foreignId('tamanho_id')->constrained('tamanhos')->onDelete('cascade');
-            $table->foreignId('cor_id')->constrained('colors')->onDelete('cascade');  // ajustei para 'cores' (pt-br)
-
-            $table->decimal('preco', 8, 2);
+            $table->unsignedBigInteger('produto_id');
+            $table->unsignedBigInteger('cor_id');
+            $table->unsignedBigInteger('tamanho_id');
             $table->integer('estoque')->default(0);
-            $table->string('sku')->nullable();
-            $table->string('foto')->nullable(); 
-
+            $table->decimal('preco', 8, 2);
+            $table->string('sku')->unique()->nullable();
+            $table->boolean('ativo')->default(true);
+            $table->string('foto')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
-            $table->unique(['produto_id', 'tamanho_id', 'cor_id'], 'variacao_unica');
+            $table->foreign('produto_id')->references('id')->on('produtos')->onDelete('cascade');
+            $table->foreign('cor_id')->references('id')->on('cores')->onDelete('restrict');
+            $table->foreign('tamanho_id')->references('id')->on('tamanhos')->onDelete('restrict');
         });
+
     }
 
     /**

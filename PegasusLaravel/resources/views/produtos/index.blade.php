@@ -31,7 +31,7 @@
                        @foreach($produtos as $p)
                                 <tr>
                                     <td>{{ $p->id }}</td>
-                                    <td>{{ $p->marca->name }}</td>
+                                    <td>{{ $p->marca->nome }}</td>
                                     <td>{{ $p->nome }}</td>
                                     <td>{{ $p->descricao }}</td>
                                 <td>

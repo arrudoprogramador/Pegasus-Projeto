@@ -34,8 +34,8 @@
                 @csrf
 
                 <div class="mb-3">
-                    <label for="name" class="form-label">Nome da Cor</label>
-                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
+                    <label for="nome" class="form-label">Nome da Cor</label>
+                    <input type="text" class="form-control" id="nome" name="nome" value="{{ old('nome') }}" required>
                 </div>
 
                 <div class="mb-3">

@@ -31,8 +31,8 @@
     @method('PUT')
 
     <div class="mb-3">
-        <label for="name" class="form-label">Nome da Cor</label>
-        <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $cor->name) }}" required>
+        <label for="nome" class="form-label">Nome da Cor</label>
+        <input type="text" class="form-control" id="nome" name="nome" value="{{ old('nome', $cor->nome) }}" required>
     </div>
 
     <div class="mb-3">

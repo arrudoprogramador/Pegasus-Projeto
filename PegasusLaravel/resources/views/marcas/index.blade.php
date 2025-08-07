@@ -37,7 +37,7 @@
                         @foreach($marcas as $marca)
                         <tr>
                             <td>{{ $marca->id }}</td>
-                            <td>{{ $marca->name }}</td>
+                            <td>{{ $marca->nome }}</td>
                             <td>
                                 <a href="{{ route('marcas.edit', $marca->id) }}" class="btn btn-warning btn-sm">Editar</a>
                                 <form action="{{ route('marcas.destroy', $marca->id) }}" method="POST" style="display:inline-block" onsubmit="return confirm('Excluir essa marca?');">

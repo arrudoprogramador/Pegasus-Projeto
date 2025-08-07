@@ -11,12 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cores', function (Blueprint $table) {
+        Schema::create('imagens_variacoes', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
-            $table->string('hex_code')->nullable(); //#fff
+            $table->unsignedBigInteger('variacao_produto_id');
+            $table->string('caminho_imagem');
+            $table->boolean('principal')->default(false);
             $table->timestamps();
+
+            $table->foreign('variacao_produto_id')->references('id')->on('variacoes_produto')->onDelete('cascade');
         });
+
     }
 
     /**
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cores');
+        Schema::dropIfExists('imagens_variacoes');
     }
 };

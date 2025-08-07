@@ -30,11 +30,11 @@ class CorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255'
+            'nome' => 'required|string|max:255'
         ]);
 
         Cor::create([
-            'name' => $request->input('name'),
+            'nome' => $request->input('nome'),
         ]);
 
         return redirect()->route('cores.index')->with('success', 'Cor criada com sucesso!');
@@ -63,11 +63,11 @@ class CorController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'nome' => 'required|string|max:255',
         ]);
 
         $cor = Cor::findOrFail($id);
-        $cor->name = $request->input('name');
+        $cor->nome = $request->input('nome');
         $cor->save();
 
         return redirect()->route('cores.index')->with('sucesso, cor atualizada com sucesso!');

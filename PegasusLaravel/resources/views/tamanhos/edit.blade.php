@@ -36,7 +36,7 @@
 
                 <div class="mb-3">
                     <label for="name" class="form-label">Nome do Tamanho</label>
-                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $tamanho->name) }}" required>
+                    <input type="text" class="form-control" id="nome" name="nome" value="{{ old('nome', $tamanho->nome) }}" required>
                 </div>
 
                 <div class="text-end">
