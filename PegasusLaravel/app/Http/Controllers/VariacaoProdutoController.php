@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cor;
 use App\Models\VariacaoProduto;
 use App\Models\Produto;
+use App\Models\Tamanho;
 use Illuminate\Http\Request;
 
 class VariacaoProdutoController extends Controller
@@ -19,7 +21,9 @@ class VariacaoProdutoController extends Controller
     public function create()
     {
         $produtos = Produto::all();
-        return view('variacoes.create', compact('produtos'));
+        $cores = Cor::all();
+        $tamanhos = Tamanho::all();
+        return view('variacoes.create', compact('produtos','cores','tamanhos'));
     }
 
     // Salva a variação no banco
@@ -27,8 +31,8 @@ class VariacaoProdutoController extends Controller
     {
         $request->validate([
             'produto_id' => 'required|exists:produtos,id',
-            'cor' => 'nullable|string|max:255',
-            'tamanho' => 'nullable|string|max:255',
+            'cor_id' => 'nullable|exists:cores,id',
+            'tamanho_id' => 'nullable|exists:tamanhos,id',
             'estoque' => 'required|integer|min:0',
             'preco' => 'required|numeric|min:0',
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -53,8 +57,8 @@ class VariacaoProdutoController extends Controller
 
         VariacaoProduto::create([
             'produto_id' => $request->input('produto_id'),
-            'cor' => $request->input('cor'),
-            'tamanho' => $request->input('tamanho'),
+            'cor_id' => $request->input('cor_id'),
+            'tamanho_id' => $request->input('tamanho_id'),
             'estoque' => $request->input('estoque'),
             'preco' => $request->input('preco'),
             'foto' => $fotoPath,

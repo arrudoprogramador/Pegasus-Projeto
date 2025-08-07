@@ -78,9 +78,11 @@ use App\Http\Controllers\TamanhoController;
 
     // Area de cores
         Route::resource('cores', CorController::class);
+        
+        Route::get('/produto/{id}/cores', [App\Http\Controllers\ProdutoController::class, 'getCores'])
+            ->name('produto.cores');
 
     // Area de tamanhos
     Route::resource('tamanhos', TamanhoController::class);
-
 
 ?>

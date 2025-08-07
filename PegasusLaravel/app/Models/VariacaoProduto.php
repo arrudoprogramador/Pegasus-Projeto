@@ -28,12 +28,12 @@ class VariacaoProduto extends Model
     // Relação com Tamanho
     public function tamanho()
     {
-        return $this->belongsTo(Tamanho::class);
+        return $this->belongsTo(Tamanho::class, 'tamanho_id');
     }
 
     // Relação com Cor
     public function cor()
     {
-        return $this->belongsTo(Cor::class);
+        return $this->belongsTo(Cor::class, 'cor_id');
     }
 }
