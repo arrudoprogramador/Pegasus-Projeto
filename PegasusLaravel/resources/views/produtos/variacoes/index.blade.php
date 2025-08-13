@@ -18,7 +18,7 @@
 <div class="container py-5">
     <div class="card shadow-sm border-0">
         <div class="card-header bg-primary text-white fw-bold">
-            Variações Cadastradas
+            <h3>Variações do produto: {{ $produto->nome }}</h3>
         </div>
 
         <div class="card-body table-responsive">
@@ -29,7 +29,6 @@
             <table class="table table-bordered table-hover">
                 <thead class="table-light">
                     <tr>
-                        <th>ID</th>
                         <th>Produto</th>
                         <th>Cor</th>
                         <th>Tamanho</th>
@@ -42,7 +41,6 @@
                 <tbody>
                     @foreach($variacoes as $v)
                         <tr>
-                            <td>{{ $v->id }}</td>
                             <td>{{ $v->produto->nome }}</td>
                             <td>{{ $v->cor->nome }}</td>
                             <td>{{ $v->tamanho->nome }}</td>

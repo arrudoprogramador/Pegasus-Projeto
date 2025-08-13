@@ -1,6 +1,19 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Variação</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/cadastroProdutos.css') }}">
+</head>
+<body class="bg-light">
 
-@section('content')
+    <header>
+        @include('componentes.navbarAdmin')
+    </header>
 <div class="container py-5">
     <div class="card shadow-sm border-0 mx-auto" style="max-width: 600px;">
         <div class="card-header bg-warning text-white fw-bold">
@@ -27,7 +40,7 @@
                     <select name="produto_id" class="form-control" required>
                         @foreach($produtos as $produto)
                             <option value="{{ $produto->id }}" {{ $produto->id == $variacao->produto_id ? 'selected' : '' }}>
-                                {{ $produto->name }}
+                                {{ $produto->nome }}
                             </option>
                         @endforeach
                     </select>
@@ -35,14 +48,27 @@
 
                 <div class="mb-3">
                     <label class="form-label">Cor</label>
-                    <input type="text" name="cor" class="form-control" value="{{ $variacao->cor }}">
+                    <select name="cor_id" id="cor_id" class="form-control" required>
+                        <option value="">Selecione uma cor</option>
+                        @foreach($cores as $cor)
+                            <option value="{{ $cor->id }}" {{ $cor->id == $variacao->cor_id ? 'selected' : '' }}>
+                                {{ $cor->nome }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Tamanho</label>
-                    <input type="text" name="tamanho" class="form-control" value="{{ $variacao->tamanho }}">
+                    <select name="tamanho_id" id="tamanho_id" class="form-control" required>
+                        <option value="">Selecione um tamanho</option>
+                        @foreach($tamanhos as $tamanho)
+                            <option value="{{ $tamanho->id }}" {{ $tamanho->id == $variacao->tamanho_id ? 'selected' : '' }}>
+                                {{ $tamanho->nome }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
-
                 <div class="mb-3">
                     <label class="form-label">Estoque</label>
                     <input type="number" name="estoque" class="form-control" value="{{ $variacao->estoque }}" required>
@@ -76,4 +102,3 @@
         </div>
     </div>
 </div>
-@endsection

@@ -76,17 +76,7 @@
                 </div>
             </li>
 
-            <!-- Variação produtos -->
-            <li class="nav-item">
-                <a href="#variacaoMenu" class="nav-link px-3" data-bs-toggle="collapse">
-                    <!-- <i class=""></i> -->
-                    <span>Variações</span>
-                </a>
-                <div class="collapse submenu" id="variacaoMenu">
-                    <a href="{{ route('variacoes.index') }}" class="nav-link px-4">Ver Tamanhos</a>
-                    <a href="{{ route('variacoes.create') }}" class="nav-link px-4">Cadastrar Tamanho</a>
-                </div>
-            </li>
+            
 
             <!-- Usuários -->
             <li class="nav-item">

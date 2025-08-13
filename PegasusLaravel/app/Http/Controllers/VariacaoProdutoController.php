@@ -11,11 +11,80 @@ use Illuminate\Http\Request;
 class VariacaoProdutoController extends Controller
 {
     // Lista todas as variações
-    public function index()
+    public function index($produtoId)
     {
-        $variacoes = VariacaoProduto::with('produto')->get();
-        return view('variacoes.index', compact('variacoes'));
+        $produto = Produto::findOrFail($produtoId);
+
+        $variacoes = VariacaoProduto::where('produto_id', $produtoId)->get();
+
+        return view('produtos.variacoes.index', compact('produto', 'variacoes'));
     }
+
+    // Lista produtos (API)
+    public function indexApi()
+{
+    try {
+        $variacoes = VariacaoProduto::with(['produto', 'cor', 'tamanho'])
+            ->where('ativo', 1)
+            ->get()
+            ->map(function ($variacao) {
+                return [
+                    // Informações básicas
+                    'id' => $variacao->id,
+                    'nome' => $variacao->produto->nome,
+                    'descricao' => $variacao->produto->descricao ?? '',
+                    'preco' => (float)$variacao->preco,
+                    'preco_original' => (float)$variacao->produto->preco_original ?? null,
+                    'estoque' => $variacao->estoque,
+                    'ativo' => $variacao->ativo,
+                    
+                    // Imagens
+                    'foto' => $variacao->foto ? url("/img/variacoes/{$variacao->foto}") : null,
+                    'foto_produto' => $variacao->produto->foto ? url("/img/produtos/{$variacao->produto->foto}") : null,
+                    
+                    // Variações
+                    'cor' => $variacao->cor ? [
+                        'id' => $variacao->cor->id,
+                        'nome' => $variacao->cor->nome,
+                        'codigo' => $variacao->cor->codigo
+                    ] : null,
+                    
+                    'tamanho' => $variacao->tamanho ? [
+                        'id' => $variacao->tamanho->id,
+                        'nome' => $variacao->tamanho->nome
+                    ] : null,
+                    
+                    // Metadados
+                    'categoria' => $variacao->produto->categoria->nome ?? null,
+                    'marca' => $variacao->produto->marca->nome ?? null,
+                    'created_at' => $variacao->created_at,
+                    'updated_at' => $variacao->updated_at,
+                    
+                    // Flags
+                    'promocao' => $variacao->produto->promocao ?? false,
+                    'destaque' => $variacao->produto->destaque ?? false,
+                    'novidade' => $variacao->produto->novidade ?? false
+                ];
+            });
+
+        return response()->json([
+            'success' => true,
+            'mensagem' => 'Lista de produtos carregada com sucesso',
+            'data' => $variacoes,
+            'meta' => [
+                'total' => count($variacoes),
+                'disponiveis' => count($variacoes->filter(fn($item) => $item['estoque'] > 0))
+            ]
+        ], 200);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'mensagem' => 'Erro ao carregar produtos',
+            'erro' => $e->getMessage()
+        ], 500);
+    }
+}
 
     // Exibe o formulário para criar nova variação
     public function create()
@@ -23,12 +92,14 @@ class VariacaoProdutoController extends Controller
         $produtos = Produto::all();
         $cores = Cor::all();
         $tamanhos = Tamanho::all();
-        return view('variacoes.create', compact('produtos','cores','tamanhos'));
+        
+        return view('produtos.variacoes.create', compact('produtos','cores','tamanhos'));
     }
 
     // Salva a variação no banco
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
+        
         $request->validate([
             'produto_id' => 'required|exists:produtos,id',
             'cor_id' => 'nullable|exists:cores,id',
@@ -38,6 +109,7 @@ class VariacaoProdutoController extends Controller
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        $variacao = VariacaoProduto::findOrFail($id);
         $fotoPath = null;
 
         if ($request->hasFile('foto')) {
@@ -55,7 +127,7 @@ class VariacaoProdutoController extends Controller
             }
         }
 
-        VariacaoProduto::create([
+        $variacao = VariacaoProduto::create([
             'produto_id' => $request->input('produto_id'),
             'cor_id' => $request->input('cor_id'),
             'tamanho_id' => $request->input('tamanho_id'),
@@ -64,15 +136,19 @@ class VariacaoProdutoController extends Controller
             'foto' => $fotoPath,
         ]);
 
-        return redirect()->route('variacoes.index')->with('success', 'Variação criada com sucesso!');
-    }
+        return redirect()->route('variacoes.index', ['produto' => $variacao->produto_id])
+                        ->with('success', 'Variação criada com sucesso!');    }
 
     // Exibe formulário de edição
     public function edit($id)
     {
         $variacao = VariacaoProduto::findOrFail($id);
         $produtos = Produto::all();
-        return view('variacoes.edit', compact('variacao', 'produtos'));
+        $cores = Cor::all(); 
+        $tamanhos = Tamanho::all(); 
+        $produtos = Produto::all();
+
+        return view('produtos.variacoes.edit', compact('variacao', 'produtos', 'cores', 'tamanhos', ));
     }
 
     // Atualiza variação
@@ -111,7 +187,8 @@ class VariacaoProdutoController extends Controller
         $variacao->preco = $request->input('preco');
         $variacao->save();
 
-        return redirect()->route('variacoes.index')->with('success', 'Variação atualizada com sucesso!');
+        return redirect()->route('variacoes.index', ['produto' => $variacao->produto_id])
+                        ->with('success', 'Variação atualizada com sucesso!');
     }
 
     // Deleta variação
@@ -120,6 +197,6 @@ class VariacaoProdutoController extends Controller
         $variacao = VariacaoProduto::findOrFail($id);
         $variacao->delete();
 
-        return redirect()->route('variacoes.index')->with('success', 'Variação excluída com sucesso!');
-    }
+        return redirect()->route('variacoes.index', ['produto' => $variacao->produto_id])
+                                ->with('success', 'Variação excluída com sucesso!');    }
 }

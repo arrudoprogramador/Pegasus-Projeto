@@ -73,8 +73,14 @@ use App\Http\Controllers\TamanhoController;
         Route::resource('marcas', MarcaController::class);
 
     // Area de variacao de produtos
+        Route::get('/produtos/{produto}/variacoes', [VariacaoProdutoController::class, 'index'])->name('variacoes.index');
+        Route::get('/variacoes/{id}/edit', [VariacaoProdutoController::class, 'edit'])->name('variacoes.edit');
+        Route::put('/variacoes/{id}', [VariacaoProdutoController::class, 'update'])->name('variacoes.update');
+        Route::delete('/variacoes/{id}', [VariacaoProdutoController::class, 'destroy'])->name('variacoes.destroy');
+        Route::get('/variacoes/create', [VariacaoProdutoController::class, 'create'])->name('variacoes.create');
+        Route::post('/variacoes', [VariacaoProdutoController::class, 'store'])->name('variacoes.store');
 
-        Route::resource('variacoes', VariacaoProdutoController::class);
+
 
     // Area de cores
         Route::resource('cores', CorController::class);
