@@ -103,7 +103,7 @@ export default StyleSheet.create({
     marginBottom: 12,
   },
   saveButton: {
-    backgroundColor: '#f54b64',
+    backgroundColor: '#a0e7e5',
     paddingVertical: 12,
     borderRadius: 8,
     marginTop: 8,
@@ -118,11 +118,11 @@ export default StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#f54b64',
+    borderColor: '#a0e7e5',
     marginTop: 12,
   },
   cancelButtonText: {
-    color: '#f54b64',
+    color: '#a0e7e5',
     textAlign: 'center',
     fontWeight: 'bold',
   },
@@ -140,7 +140,7 @@ export default StyleSheet.create({
   },
   modalConfirmButton: {
     flex: 1,
-    backgroundColor: '#f54b64',
+    backgroundColor: '#a0e7e5',
     paddingVertical: 12,
     borderRadius: 8,
     marginLeft: 8,
