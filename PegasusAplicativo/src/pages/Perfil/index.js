@@ -1,14 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { Text, Modal, TextInput, View, ActivityIndicator, Alert, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import {
+  StatusBar,
+  Text,
+  Modal,
+  TextInput,
+  View,
+  ActivityIndicator,
+  Alert,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+  Platform
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import styles from './style';
-import api from '../../services/api'; 
-import { Ionicons } from '@expo/vector-icons';
+import api from '../../services/api';
+import { Ionicons, Feather, FontAwesome, Entypo, MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import Constants from 'expo-constants';
-import { Image } from 'react-native';
+import style from './style';
 
 export default function Perfil() {
   const [usuario, setUsuario] = useState(null);
@@ -21,21 +31,18 @@ export default function Perfil() {
   const [modalLogoutVisible, setModalLogoutVisible] = useState(false);
   const [sucessoModalVisible, setSucessoModalVisible] = useState(false);
   const [loading, setLoading] = useState(true);
-  const navigation = useNavigation(); 
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
-  let apiKey = "http://192.168.18.33:8000";
-    
-      if (__DEV__) {
-        if (Platform.OS === 'web') {
-          apiKey = 'http://127.0.0.1:8000';
-        } else {
-          const hostUri = Constants.expoConfig?.hostUri;
-          const localIP = hostUri ? hostUri.split(':')[0] : 'localhost';
-          apiKey = `http://${localIP}:8000`;
-        }
-      } else {
-        apiKey = "http://192.168.18.33:8000";
-      }
+  const navigation = useNavigation();
+
+  let apiKey = 'http://192.168.18.33:8000';
+  if (__DEV__) {
+    if (Platform.OS === 'web') {
+      apiKey = 'http://127.0.0.1:8000';
+    } else {
+      const hostUri = Constants.expoConfig?.hostUri;
+      const localIP = hostUri ? hostUri.split(':')[0] : 'localhost';
+      apiKey = `http://${localIP}:8000`;
+    }
+  }
 
   useEffect(() => {
     const buscarDados = async () => {
@@ -47,12 +54,12 @@ export default function Perfil() {
         setNome(userData.nome);
         setEmail(userData.email);
         setUserId(userData.id);
-
       } catch (error) {
         console.error('Erro ao buscar dados do perfil', error);
+      } finally {
+        setLoading(false);
       }
     };
-
     buscarDados();
   }, []);
 
@@ -68,13 +75,9 @@ export default function Perfil() {
 
       const response = await fetch(`${apiKey}/api/conta/atualizar/${userId}`, {
         method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-        },
+        headers: { Accept: 'application/json' },
         body: formData,
       });
-
-      const json = await response.json();
 
       if (response.ok) {
         const res = await api.get('/user');
@@ -85,8 +88,8 @@ export default function Perfil() {
         setModalEditarVisible(false);
         setSucessoModalVisible(true);
       } else {
-        console.warn(json);
-        Alert.alert('Erro', 'Erro ao atualizar perfil: ' + JSON.stringify(json.errors || json.message));
+        const json = await response.json();
+        Alert.alert('Erro', `Erro ao atualizar perfil: ${JSON.stringify(json.errors || json.message)}`);
       }
     } catch (error) {
       console.error('Erro na atualização:', error);
@@ -96,187 +99,116 @@ export default function Perfil() {
     }
   };
 
-  const renderFooter = () => (
-    <LinearGradient
-      colors={['#000']}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 0 }}
-      style={styles.footer}
-    >
-      <View style={styles.contentFooter}>
-        {botoes.map((item, index) => (
-          item.central ? (
-            <TouchableOpacity 
-              key={index}
-              style={styles.centralButtonWrapper}
-              onPress={() => navigation.navigate(item.tela)}
-            >
-              <View style={styles.centralButton}>
-                <Image source={item.imagem} style={styles.centralIcon} />
-              </View>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity 
-              key={index}
-              style={{ alignItems: 'center' }}
-              onPress={() => navigation.navigate(item.tela)}
-            >
-              <Image
-                source={item.imagem}
-                style={[
-                  styles.footerIcon,
-                  navigation.isFocused(item.tela) && styles.footerIconActive
-                ]}
-              />
-              <Text style={[
-                styles.footerText,
-                navigation.isFocused(item.tela) && styles.footerTextActive
-              ]}>
-                {item.nome}
-              </Text>
-            </TouchableOpacity>
-          )
-        ))}
-      </View>
-    </LinearGradient>
-  );
-
-  const botoes = [
-    { nome: "Home", imagem: require("../../../assets/homeee.png"), tela: "Home" },
-    { nome: "Pesquisar", imagem: require("../../../assets/lupa.png") },
-    { nome: "", imagem: require("../../../assets/sacola.png"), tela: "Carrinho", central: true },
-    { nome: "Curtidas", imagem: require("../../../assets/coracao.png"), tela: "coracao" },
-    { nome: "Usuário", imagem: require("../../../assets/user.png"), tela: (isAuthenticated) ? "Perfil" : "Login"},
-  ];
-
   const sairDaConta = async () => {
     try {
       await AsyncStorage.removeItem('authToken');
-      setUsuario(null);
       navigation.navigate('Home');
     } catch (error) {
       console.error('Erro ao sair da conta:', error);
     }
   };
 
-  if (!usuario) {
+  if (loading || !usuario) {
     return (
-      <View style={styles.container}>
+      <View style={style.container}>
         <ActivityIndicator size="large" color="#008000" />
       </View>
     );
   }
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Olá, {usuario.nome}</Text>
+const options = [
+  { label: 'Histórico de Pedidos', icon: <Ionicons name="calendar-outline" size={20} color="#555" />, action: () => {} },
+  { label: 'Método de Pagamento', icon: <Feather name="credit-card" size={20} color="#555" />, action: () => {} },
+  { label: 'Meus Endereços', icon: <Entypo name="location-pin" size={20} color="#555" />, action: () => {} },
+  { label: 'Meus Cupons', icon: <MaterialIcons name="card-giftcard" size={20} color="#555" />, action: () => {} },
+  { label: 'Favoritos', icon: <FontAwesome name="heart-o" size={20} color="#555" />, action: () => {} },
+  { label: 'Sair da Conta', icon: <Feather name="log-out" size={20} color="#555" />, action: sairDaConta },
+];
 
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoLabel}>Email</Text>
-        <Text style={styles.infoValue}>{usuario.email}</Text>
+
+  return (
+    <View style={style.container}>
+      <LinearGradient colors={['#a0e7e5', '#4b9290ff']} style={style.header}>
+        <Text style={style.headerText}>Meu Perfil</Text>
+      </LinearGradient>
+
+      <View style={style.profileCard}>
+        <Image
+          source={{ uri: usuario.avatar || '' }}
+          style={style.profileImage}
+        />
+        <View style={{ flex: 1 }}>
+          <Text style={style.profileName}>{usuario.nome}</Text>
+          <Text style={style.profileEmail}>{usuario.email}</Text>
+        </View>
+        <TouchableOpacity onPress={() => setModalEditarVisible(true)} style={style.editIcon}>
+          <Feather name="edit" size={18} color="#555" />
+        </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.logoutButton} onPress={() => setModalEditarVisible(true)} activeOpacity={0.8}>
-        <Text style={styles.logoutButtonText}>Editar informações</Text>
-      </TouchableOpacity>
+      <ScrollView style={style.optionsContainer}>
+        {options.map((opt, idx) => (
+          <TouchableOpacity key={idx} style={style.option} onPress={opt.action}>
+            <View style={style.optionLeft}>
+              {opt.icon}
+              <Text style={style.optionText}>{opt.label}</Text>
+            </View>
+            <Feather name="chevron-right" size={20} color="#ccc" />
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
 
-      <TouchableOpacity style={styles.logoutButton} onPress={() => setModalLogoutVisible(true)} activeOpacity={0.8}>
-        <Text style={styles.logoutButtonText}>Sair</Text>
-      </TouchableOpacity>
-
-      
-
-      {/* Modal de Edição */}
+      {/* Modals... (mesmos que você já possui) */}
       <Modal visible={modalEditarVisible} animationType="slide" transparent>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Editar Perfil</Text>
-            
-            <TextInput
-              value={nome}
-              onChangeText={setNome}
-              placeholder="Nome"
-              style={styles.inputField}
-            />
-            <TextInput
-              value={email}
-              onChangeText={setEmail}
-              placeholder="Email"
-              keyboardType="email-address"
-              style={[styles.inputField, { flex: 1 }]}
-            />
-            <View style={styles.inputFieldContainer}>
+        <View style={style.modalContainer}>
+          <View style={style.modalContent}>
+            <Text style={style.modalTitle}>Editar Perfil</Text>
+            <TextInput style={style.inputField} value={nome} onChangeText={setNome} placeholder="Nome" />
+            <TextInput style={style.inputField} value={email} onChangeText={setEmail} placeholder="Email" keyboardType="email-address" />
+            <View style={style.inputFieldContainer}>
               <TextInput
+                style={{ flex: 1 }}
+                placeholder="Senha (deixe em branco para manter)"
                 value={senha}
                 onChangeText={setSenha}
-                placeholder="Senha (deixe em branco para manter)"
                 secureTextEntry={!senhaVisivel}
-                style={{ flex: 1, paddingVertical: 10 }}
               />
               <TouchableOpacity onPress={() => setSenhaVisivel(!senhaVisivel)}>
-                <Ionicons
-                  name={senhaVisivel ? 'eye-off' : 'eye'}
-                  size={24}
-                  color="gray"
-                  style={{ marginLeft: 10, marginRight: 5 }}
-                />
+                <Ionicons name={senhaVisivel ? 'eye-off' : 'eye'} size={24} color="gray" />
               </TouchableOpacity>
             </View>
-            
-            <TouchableOpacity onPress={atualizarPerfil} style={styles.saveButton}>
-              <Text style={styles.saveButtonText}>Salvar</Text>
+            <TouchableOpacity style={style.saveButton} onPress={atualizarPerfil}>
+              <Text style={style.saveButtonText}>Salvar</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => setModalEditarVisible(false)} style={styles.cancelButton}>
-              <Text style={styles.cancelButtonText}>Cancelar</Text>
+            <TouchableOpacity style={style.cancelButton} onPress={() => setModalEditarVisible(false)}>
+              <Text style={style.cancelButtonText}>Cancelar</Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
 
-      {/* Modal de Logout */}
-      <Modal
-        transparent
-        animationType="fade"
-        visible={modalLogoutVisible}
-        onRequestClose={() => setModalLogoutVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Deseja sair da conta?</Text>
-            <View style={styles.modalButtonContainer}>
-              <TouchableOpacity
-                onPress={() => setModalLogoutVisible(false)}
-                style={styles.modalCancelButton}
-              >
-                <Text style={styles.modalButtonText}>Cancelar</Text>
+      <Modal transparent animationType="fade" visible={modalLogoutVisible} onRequestClose={() => setModalLogoutVisible(false)}>
+        <View style={style.modalContainer}>
+          <View style={style.modalContent}>
+            <Text style={style.modalTitle}>Deseja sair da conta?</Text>
+            <View style={style.modalButtonContainer}>
+              <TouchableOpacity style={style.modalCancelButton} onPress={() => setModalLogoutVisible(false)}>
+                <Text style={style.modalButtonText}>Cancelar</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={sairDaConta}
-                style={styles.modalConfirmButton}
-              >
-                <Text style={styles.modalButtonTextConfirm}>Sair</Text>
+              <TouchableOpacity style={style.modalConfirmButton} onPress={sairDaConta}>
+                <Text style={style.modalButtonTextConfirm}>Sair</Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
       </Modal>
 
-      {/* Modal de Sucesso */}
-      <Modal
-        visible={sucessoModalVisible}
-        transparent
-        animationType="fade"
-        onRequestClose={() => setSucessoModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Perfil atualizado com sucesso!</Text>
-            <TouchableOpacity
-              onPress={() => setSucessoModalVisible(false)}
-              style={styles.saveButton}
-            >
-              <Text style={styles.saveButtonText}>OK</Text>
+      <Modal visible={sucessoModalVisible} transparent animationType="fade" onRequestClose={() => setSucessoModalVisible(false)}>
+        <View style={style.modalContainer}>
+          <View style={style.modalContent}>
+            <Text style={style.modalTitle}>Perfil atualizado com sucesso!</Text>
+            <TouchableOpacity style={style.saveButton} onPress={() => setSucessoModalVisible(false)}>
+              <Text style={style.saveButtonText}>OK</Text>
             </TouchableOpacity>
           </View>
         </View>
