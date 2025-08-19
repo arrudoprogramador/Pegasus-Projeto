@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, FlatList, TouchableOpacity, Dimensions,Animated,RefreshControl, Easing} from 'react-native';
+import { View, Text, Image, FlatList, TouchableOpacity, Dimensions,Animated,RefreshControl, Easing, TextInput} from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import styles from './style';
@@ -79,7 +79,9 @@ export default function Curtidas() {
   const fadeAnim = useState(new Animated.Value(0))[0];
   const slideUpAnim = useState(new Animated.Value(30))[0];
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
+  const [searchQuery, setSearchQuery] = useState('');
+const [filteredFavorites, setFilteredFavorites] = useState(favorites);
+
 
    useEffect(() => {
   const checkAuth = async () => {
@@ -98,6 +100,13 @@ export default function Curtidas() {
 
   checkAuth();
 }, []);
+
+useEffect(() => {
+  const filtered = favorites.filter(item =>
+    item.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  setFilteredFavorites(filtered);
+}, [searchQuery, favorites]);
 
 
   useEffect(() => {
@@ -158,7 +167,7 @@ export default function Curtidas() {
         <Ionicons 
           name={item.isWishlisted ? 'heart' : 'heart-outline'} 
           size={24} 
-          color={item.isWishlisted ? '#000' : '#ccc'} 
+          color={item.isWishlisted ? '#e60023' : '#ccc'} 
         />
       </TouchableOpacity>
       
@@ -206,8 +215,18 @@ export default function Curtidas() {
   return (
     <View style={styles.container}>
     
+    <View style={styles.fixedSearchBar}>
+  <TextInput
+    style={styles.barraPesquisa}
+    placeholder="Buscar produto..."
+    placeholderTextColor="#999"
+    value={searchQuery}
+    onChangeText={text => setSearchQuery(text)}
+  />
+</View>
+
       <FlatList
-        data={favorites}
+      data={filteredFavorites}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         numColumns={2}

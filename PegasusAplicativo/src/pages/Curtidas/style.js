@@ -1,214 +1,222 @@
+// style.js
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-container: {
+  container: {
     flex: 1,
-    backgroundColor: '#f5f5f5', 
-  },
-  
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
-    elevation: 2,
+    backgroundColor: '#FAFAFA',
   },
 
-  title:{
-    color: '#000',
-    fontSize: 22,
-    textAlign: 'center',
-  },
-  
-  headerTitle: {
+  fixedSearchBar: {
+  paddingHorizontal: 12,
+  paddingVertical: 8,
+  borderBottomWidth: 1,       // Para separar visualmente da lista abaixo
+  borderColor: '#ddd',
+  backgroundColor: '#fff',
+  zIndex: 10,
+},
+
+barraPesquisa: {
+  backgroundColor: '#f5f5f5',  // tom neutro claro para o fundo do input
+  borderRadius: 8,
+  paddingVertical: 8,
+  paddingHorizontal: 15,
+  fontSize: 14,
+  color: '#333',
+  width: '100%',
+  // sombra sutil para dar profundidade
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 1 },
+  shadowOpacity: 0.1,
+  shadowRadius: 2,
+  elevation: 2,
+},
+
+
+  title: {
+    color: '#333',
     fontSize: 18,
-    fontWeight: '600',
-    color: '#212529',
+    textAlign: 'center',
+    marginTop: 40,
+    paddingHorizontal: 20,
   },
-  
+
   listContent: {
-    paddingHorizontal: 8,
-    paddingTop: 8,
-    paddingBottom: 20,
+    paddingHorizontal: 12,
+    paddingTop: 12,
+    paddingBottom: 32,
   },
-  
-  productCard: {
-    width: '48%', 
-    backgroundColor: '#fff',
-    borderRadius: 8, 
-    margin: 4,
-    padding: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
-    position: 'relative',
-  },
-  
+
   gridContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
     justifyContent: 'space-between',
-    paddingHorizontal: 4,
   },
-  
-  wishlistButton: {
-    position: 'absolute',
-    top: 8,
-    right: 8,
-    zIndex: 2,
-    backgroundColor: 'rgba(255,255,255,0.7)',
-    borderRadius: 12,
-    padding: 4,
+
+productCard: {
+  width: '48%',
+  backgroundColor: '#fff',
+  borderRadius: 12,
+  marginBottom: 16,
+  padding: 10,
+
+  // iOS
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 0,
+    height: 2,
   },
-  
+  shadowOpacity: 0.1,
+  shadowRadius: 4,
+
+  // ANDROID
+  elevation: 4,
+},
+
+wishlistButton: {
+  position: 'absolute',
+  top: 8,
+  right: 8,
+  zIndex: 2,
+  backgroundColor: '#ffffff', 
+  borderRadius: 16,
+  padding: 6,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 1 },
+  shadowOpacity: 0.1,
+  shadowRadius: 2,
+  elevation: 2,
+},
+
+
   productImage: {
     width: '100%',
-    height: 120, 
-    borderRadius: 4,
+    height: 140,
+    borderRadius: 8,
     resizeMode: 'contain',
+    backgroundColor: '#fff',
     marginBottom: 8,
-    backgroundColor: '#f9f9f9', 
   },
-  
+
   productInfo: {
     paddingHorizontal: 4,
   },
-  
+
   productName: {
-    fontSize: 13,
-    color: '#212529',
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#222',
+    height: 36,
     marginBottom: 6,
-    height: 36, 
-    lineHeight: 18,
-    overflow: 'hidden',
   },
-  
+
   priceContainer: {
-    flexDirection: 'column',
-    marginBottom: 4,
+    marginBottom: 6,
   },
-  
+
   currentPrice: {
     fontSize: 15,
-    fontWeight: '700',
-    color: '#008000', 
-    marginBottom: 2,
+    fontWeight: 'bold',
+    color: '#28a745',
   },
-  
+
   originalPrice: {
-    fontSize: 11,
-    color: '#9e9e9e',
+    fontSize: 12,
+    color: '#aaa',
     textDecorationLine: 'line-through',
+    marginTop: 2,
   },
-  
+
   discountTag: {
     fontSize: 11,
     fontWeight: '600',
-    color: '#5aa1f2',
-    backgroundColor: '#2c4cc9',
-    borderRadius: 2,
-    paddingHorizontal: 4,
-    paddingVertical: 1,
+    color: '#fff',
+    backgroundColor: '#ff6f00',
+    borderRadius: 4,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
     alignSelf: 'flex-start',
-    marginTop: 4,
+    marginTop: 6,
   },
-  
+
   ratingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 4,
+    marginTop: 6,
   },
-  
+
   ratingText: {
-    fontSize: 11,
-    color: '#008000',
-    marginLeft: 2,
+    fontSize: 12,
+    color: '#555',
+    marginLeft: 4,
     marginRight: 4,
   },
-  
+
   soldText: {
-    fontSize: 11,
-    color: '#9e9e9e',
+    fontSize: 12,
+    color: '#999',
   },
-  
+
   shippingTag: {
-    backgroundColor: '#f5f5f5',
-    borderRadius: 2,
-    paddingHorizontal: 4,
-    paddingVertical: 1,
-    marginTop: 4,
+    backgroundColor: '#e0f7fa',
+    borderRadius: 4,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    marginTop: 6,
     alignSelf: 'flex-start',
   },
-  
+
   shippingText: {
-    fontSize: 10,
-    color: '#757575',
+    fontSize: 11,
+    color: '#00796b',
   },
-  
+
   addToCartButton: {
-    backgroundColor: '#008000',
-    borderRadius: 2,
-    paddingVertical: 6,
+    backgroundColor: '#28a745',
+    borderRadius: 6,
+    paddingVertical: 8,
+    marginTop: 10,
     alignItems: 'center',
-    marginTop: 8,
   },
-  
+
   addToCartText: {
     color: '#fff',
-    fontSize: 12,
-    fontWeight: '500',
+    fontSize: 13,
+    fontWeight: 'bold',
   },
-  
-  removeButton: {
-    position: 'absolute',
-    top: 8,
-    left: 8,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    borderRadius: 12,
-    padding: 4,
-  },
-  
-  // Lista Vazia
+
+  // Lista vazia
   emptyList: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 100,
   },
-  
+
   emptyText: {
-    fontSize: 18,
-    color: '#212529',
-    fontWeight: '600',
+    fontSize: 20,
+    color: '#555',
+    fontWeight: 'bold',
     marginTop: 16,
   },
-  
+
   emptySubtext: {
     fontSize: 14,
-    color: '#9e9e9e',
+    color: '#888',
     marginTop: 8,
     textAlign: 'center',
     paddingHorizontal: 40,
   },
-  
+
   keepShoppingButton: {
     marginTop: 24,
-    backgroundColor: '#ee4d2d',
-    borderRadius: 4,
+    backgroundColor: '#A8CEC3',
+    borderRadius: 6,
     paddingHorizontal: 24,
     paddingVertical: 12,
   },
-  
+
   keepShoppingText: {
     color: '#fff',
-    fontSize: 16,
-    fontWeight: '500',
+    fontSize: 15,
+    fontWeight: '600',
   },
-
 });
