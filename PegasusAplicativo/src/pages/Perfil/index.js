@@ -122,13 +122,25 @@ const options = [
   { label: 'Meus Endereços', icon: <Entypo name="location-pin" size={20} color="#555" />, action: () => {} },
   { label: 'Meus Cupons', icon: <MaterialIcons name="card-giftcard" size={20} color="#555" />, action: () => {} },
   { label: 'Favoritos', icon: <FontAwesome name="heart-o" size={20} color="#555" />, action: () => {} },
+  
+{ label: 'Informações pessoais', icon: <FontAwesome name="user" size={20} color="#555" />, action: () => {} },
+{ label: 'Segurança e Acesso', icon: <FontAwesome name="lock" size={20} color="#555" />, action: () => {} },
+{ label: 'Notificações', icon: <FontAwesome name="bell" size={20} color="#555" />, action: () => {} },
+{ label: 'Ajuda e Suporte', icon: <FontAwesome name="question-circle" size={20} color="#555" />, action: () => {} },
+
+
+  // filtros para pesquisas 
+  { label: 'Tamanhos e Medidas', icon: <FontAwesome name="ruler" size={20} color="#555" />, action: () => {} },
+{ label: 'Preferências de Estilo', icon: <FontAwesome name="th-large" size={20} color="#555" />, action: () => {} },
+
   { label: 'Sair da Conta', icon: <Feather name="log-out" size={20} color="#555" />, action: sairDaConta },
 ];
 
 
   return (
     <View style={style.container}>
-      <LinearGradient colors={['#a0e7e5', '#4b9290ff']} style={style.header}>
+      <LinearGradient colors={['#001', '#003']} style={style.header} start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}>
         <Text style={style.headerText}>Meu Perfil</Text>
       </LinearGradient>
 
