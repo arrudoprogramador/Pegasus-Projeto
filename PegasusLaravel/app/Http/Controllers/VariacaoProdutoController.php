@@ -97,7 +97,7 @@ class VariacaoProdutoController extends Controller
     }
 
     // Salva a variação no banco
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
         
         $request->validate([
@@ -109,7 +109,7 @@ class VariacaoProdutoController extends Controller
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $variacao = VariacaoProduto::findOrFail($id);
+        
         $fotoPath = null;
 
         if ($request->hasFile('foto')) {
@@ -137,7 +137,41 @@ class VariacaoProdutoController extends Controller
         ]);
 
         return redirect()->route('variacoes.index', ['produto' => $variacao->produto_id])
-                        ->with('success', 'Variação criada com sucesso!');    }
+                        ->with('success', 'Variação criada com sucesso!');    
+        }
+
+
+        public function favoritar($id)
+    {
+        try {
+            $produto = VariacaoProduto::with('variacoes')->findOrFail($id);
+            $jaFavoritado = VariacaoProduto::where('id', $produto->id)->exists();
+
+            if (!$jaFavoritado) {
+                VariacaoProduto::create([
+                    'produto_id' => $produto->id,
+                    'nome' => $produto->nome,
+                    'descricao' => $produto->descricao,
+                    'foto' => $produto->variacoes->first()->foto ?? null,
+                    'preco' => $produto->variacoes->first()->preco ?? null,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+
+                $message = 'Produto adicionado aos favoritos!';
+                $alertType = 'success';
+            } else {
+                VariacaoProduto::where('produto_id', $produto->id)->delete();
+
+                $message = 'Produto removido dos favoritos!';
+                $alertType = 'info';
+            }
+
+            return back()->with($alertType, $message);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Erro: ' . $e->getMessage());
+        }
+    }
 
     // Exibe formulário de edição
     public function edit($id)

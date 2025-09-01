@@ -100,7 +100,7 @@ export default function Home() {
             try {
                 const token = await AsyncStorage.getItem('authToken');
                 if (token) {
-                    setIsAuthenticated(true);
+                    setIsAuthenticated(true); //está com um bug no app de primeiro acesso, para isso coloque false para fazer cadastro, depois aparece normal
                 } else {
                     setIsAuthenticated(false);
                 }

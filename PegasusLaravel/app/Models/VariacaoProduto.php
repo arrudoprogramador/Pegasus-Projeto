@@ -29,11 +29,17 @@ class VariacaoProduto extends Model
         return $this->hasMany(ImagemVariacao::class);
     }
 
-    public function promocaoAtual() {
-        return $this->hasOne(Promocao::class)
-            ->whereDate('inicio', '<=', now())
-            ->where(function ($query) {
-                $query->whereNull('fim')->orWhereDate('fim', '>=', now());
-            });
+    
+    public function destaques()
+    {
+        return $this->hasMany(Destaque::class, 'variacao_id');
     }
+
+    // Helper para saber se uma variação tem certo destaque
+    public function isDestaque($tipo)
+    {
+        return $this->destaques()->where('tipo', $tipo)->exists();
+    }
+
+
 }

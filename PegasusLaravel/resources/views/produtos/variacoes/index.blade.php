@@ -35,7 +35,9 @@
                         <th>Estoque</th>
                         <th>Preço</th>
                         <th>Foto</th>
-                        <th>Ações</th>
+                        <th>favoritar</th>
+                        <th>Editar</th>
+                        <th>Excluir</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,11 +53,26 @@
                                     <img src="{{ asset('img/variacoes/' . $v->foto) }}" alt="Foto" width="50">
                                 @endif
                             </td>
+
+                            {{-- Botão Favoritar --}}
+                                <td onclick="event.stopPropagation();">
+                                    <form action="{{ route('variacao.favoritar', $v->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" 
+                                                class="btn-action btn-fav {{ $v->favoritado ? 'gold' : 'gray' }}" 
+                                                title="{{ $v->favoritado ? 'Desfavoritar' : 'Favoritar' }}">
+                                            ★
+                                        </button>
+                                    </form>
+                                </td>
+
                             <td>
                                 <a href="{{ route('variacoes.edit', $v->id) }}" class="btn btn-sm btn-warning">
                                     <i class="bi bi-pencil-fill"></i>
                                 </a>
+                            </td>
 
+                            <td>
                                 <form action="{{ route('variacoes.destroy', $v->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Deseja excluir?')">
                                     @csrf
                                     @method('DELETE')
@@ -63,6 +80,10 @@
                                         <i class="bi bi-trash-fill"></i>
                                     </button>
                                 </form>
+
+                            </td>
+
+                                
                             </td>
                         </tr>
                     @endforeach

@@ -15,7 +15,9 @@ Route::post('conta/adicionar',[UsuarioController::class, 'storeApi']);
 Route::delete('/conta/excluir/{id}',[UsuarioController::class, 'destroyApi']);
 Route::put('/conta/atualizar/{id}', [UsuarioController::class, 'updateApi']);
 
-Route::middleware('auth:sanctum')->get('/user', [UsuarioController::class, 'perfil']);
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
 //Produtos
 Route::get('/visualizarProdutos', [VariacaoProdutoController::class, 'indexApi'])->name('produtos.indexApi');

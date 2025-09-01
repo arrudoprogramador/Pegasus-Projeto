@@ -8,6 +8,7 @@ use App\Http\Controllers\VariacaoProdutoController;
 use App\Http\Controllers\CorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TamanhoController;
+use App\Http\Controllers\DestaqueController;
 
     // Página inicial
     Route::get('/', function () {
@@ -22,6 +23,11 @@ use App\Http\Controllers\TamanhoController;
         })->name('navbarAdmin');
 
 // ___________________
+
+
+Route::get('/admin/variacoes/{id}/destaque/{tipo}', [DestaqueController::class, 'toggle'])
+    ->name('admin.variacoes.destaque.toggle');
+
 
     // Area de Produtos    
         Route::get('/visualizarProdutos', [ProdutoController::class, 'index'])->name('produtos.index');
@@ -49,8 +55,10 @@ use App\Http\Controllers\TamanhoController;
         });
 
         // Fav
-        Route::post('/produtos/{id}/favoritar', [ProdutoController::class, 'favoritar'])->name('produto.favoritar');
-       
+            // Route::post('/produtos/{id}/favoritar', [ProdutoController::class, 'favoritar'])->name('produto.favoritar');
+        Route::post('/variacao/{id}/favoritar', [VariacaoProdutoController::class, 'favoritar'])->name('variacao.favoritar');
+
+
         // Editar
         Route::get('/favorito/{id}', [FavoritoController::class, 'edit'])->name('favorito.edit'); // página
         Route::put('/favorito/{id}/edit', [FavoritoController::class, 'update'])->name('favorito.update');  // ação

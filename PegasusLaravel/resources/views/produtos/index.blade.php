@@ -79,7 +79,7 @@
                     <th>Nome</th>
                     <th>Descrição</th>
                     <th>Editar</th>
-                    <th>Favoritar</th>
+                    
                     <th>Excluir</th>
                 </tr>
             </thead>
@@ -102,17 +102,7 @@
                         </form>
                     </td>
 
-                    {{-- Botão Favoritar --}}
-                    <td onclick="event.stopPropagation();">
-                        <form action="{{ route('produto.favoritar', $p->id) }}" method="POST">
-                            @csrf
-                            <button type="submit" 
-                                    class="btn-action btn-fav {{ $p->favoritado ? 'gold' : 'gray' }}" 
-                                    title="{{ $p->favoritado ? 'Desfavoritar' : 'Favoritar' }}">
-                                ★
-                            </button>
-                        </form>
-                    </td>
+                    
 
                     {{-- Botão Excluir --}}
                     <td onclick="event.stopPropagation();">

@@ -62,37 +62,37 @@ class ProdutoController extends Controller
     }
 
     // Favoritar/desfavoritar produto
-    public function favoritar($id)
-    {
-        try {
-            $produto = Produto::with('variacoes')->findOrFail($id);
-            $jaFavoritado = Favorito::where('produto_id', $produto->id)->exists();
+    // public function favoritar($id)
+    // {
+    //     try {
+    //         $produto = Produto::with('variacoes')->findOrFail($id);
+    //         $jaFavoritado = Favorito::where('produto_id', $produto->id)->exists();
 
-            if (!$jaFavoritado) {
-                Favorito::create([
-                    'produto_id' => $produto->id,
-                    'nome' => $produto->nome,
-                    'descricao' => $produto->descricao,
-                    'foto' => $produto->variacoes->first()->foto ?? null,
-                    'preco' => $produto->variacoes->first()->preco ?? null,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
+    //         if (!$jaFavoritado) {
+    //             Favorito::create([
+    //                 'produto_id' => $produto->id,
+    //                 'nome' => $produto->nome,
+    //                 'descricao' => $produto->descricao,
+    //                 'foto' => $produto->variacoes->first()->foto ?? null,
+    //                 'preco' => $produto->variacoes->first()->preco ?? null,
+    //                 'created_at' => now(),
+    //                 'updated_at' => now(),
+    //             ]);
 
-                $message = 'Produto adicionado aos favoritos!';
-                $alertType = 'success';
-            } else {
-                Favorito::where('produto_id', $produto->id)->delete();
+    //             $message = 'Produto adicionado aos favoritos!';
+    //             $alertType = 'success';
+    //         } else {
+    //             Favorito::where('produto_id', $produto->id)->delete();
 
-                $message = 'Produto removido dos favoritos!';
-                $alertType = 'info';
-            }
+    //             $message = 'Produto removido dos favoritos!';
+    //             $alertType = 'info';
+    //         }
 
-            return back()->with($alertType, $message);
-        } catch (\Exception $e) {
-            return back()->with('error', 'Erro: ' . $e->getMessage());
-        }
-    }
+    //         return back()->with($alertType, $message);
+    //     } catch (\Exception $e) {
+    //         return back()->with('error', 'Erro: ' . $e->getMessage());
+    //     }
+    // }
 
     // Exibe formulário de edição
     public function edit($id)
