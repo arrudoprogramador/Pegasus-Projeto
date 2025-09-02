@@ -117,7 +117,7 @@ export default function Perfil() {
   }
 
 const options = [
-  { label: 'Histórico de Pedidos', icon: <Ionicons name="calendar-outline" size={20} color="#555" />, action: () => {} },
+  { label: 'Histórico de Pedidos', icon: <Ionicons name="calendar-outline" size={20} color="#555" />, action: () => navigation.navigate('HistoricoPedido') },
   { label: 'Método de Pagamento', icon: <Feather name="credit-card" size={20} color="#555" />, action: () => {} },
   { label: 'Meus Endereços', icon: <Entypo name="location-pin" size={20} color="#555" />, action: () => {} },
   { label: 'Meus Cupons', icon: <MaterialIcons name="card-giftcard" size={20} color="#555" />, action: () => {} },

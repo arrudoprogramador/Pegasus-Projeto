@@ -10,6 +10,7 @@ import Perfil from './src/pages/Perfil';
 import Carrinho from './src/pages/Carrinho';
 import Curtidas from './src/pages/Curtidas';
 import ProductDetail from './src/pages/ProductDetail';
+import HistoricoPedido from './src/pages/HistoricoPedido';
 import Pesquisa from './src/pages/Pesquisa';
 
 
@@ -38,6 +39,14 @@ export default function App() {
           <Stack.Screen name="Cadastro" component={Cadastro}
             options={{
               title: "Cadastro",
+              headerStyle: { backgroundColor: "#edebeb" },
+              headerTintColor: "#000",
+            }}
+          />
+
+          <Stack.Screen name="HistoricoPedido" component={HistoricoPedido}
+            options={{
+              title: "HistoricoPedido",
               headerStyle: { backgroundColor: "#edebeb" },
               headerTintColor: "#000",
             }}
