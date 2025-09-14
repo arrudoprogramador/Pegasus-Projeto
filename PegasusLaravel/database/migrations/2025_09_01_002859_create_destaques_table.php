@@ -11,7 +11,17 @@ return new class extends Migration
         Schema::create('destaques', function (Blueprint $table) {
             $table->id();
             $table->foreignId('variacao_id')->constrained('variacoes_produto')->onDelete('cascade');
+            
+            // |
+            // ˇ
             $table->string('tipo'); // exemplo: favorito, promocao, lancamento
+            // ^
+            // |
+
+            // Necessário uma tabela de tipo de destaque, pois os produtos 
+            // serão agrupados de acordo com os tipos de destaque.
+            
+            
             $table->timestamps();
 
             $table->unique(['variacao_id', 'tipo']); // garante que não haja duplicação

@@ -29,12 +29,12 @@
             <table class="table table-bordered table-hover">
                 <thead class="table-light">
                     <tr>
+                        <th>Foto</th>
                         <th>Produto</th>
                         <th>Cor</th>
-                        <th>Tamanho</th>
                         <th>Estoque</th>
                         <th>Preço</th>
-                        <th>Foto</th>
+                        
                         <th>favoritar</th>
                         <th>Editar</th>
                         <th>Excluir</th>
@@ -43,16 +43,15 @@
                 <tbody>
                     @foreach($variacoes as $v)
                         <tr>
-                            <td>{{ $v->produto->nome }}</td>
-                            <td>{{ $v->cor->nome }}</td>
-                            <td>{{ $v->tamanho->nome }}</td>
-                            <td>{{ $v->estoque }}</td>
-                            <td>R$ {{ number_format($v->preco, 2, ',', '.') }}</td>
                             <td>
                                 @if($v->foto)
-                                    <img src="{{ asset('img/variacoes/' . $v->foto) }}" alt="Foto" width="50">
+                                    <img src="{{ asset('img/variacoes/' . $v->foto) }}" alt="Foto" width="50" style="border-radius: 15px;">
                                 @endif
                             </td>
+                            <td>{{ $v->produto->nome }}</td>
+                            <td>{{ $v->cor->nome }}</td>                            
+                            <td>R$ {{ number_format($v->preco, 2, ',', '.') }}</td>
+                            
 
                             {{-- Botão Favoritar --}}
                                 <td onclick="event.stopPropagation();">

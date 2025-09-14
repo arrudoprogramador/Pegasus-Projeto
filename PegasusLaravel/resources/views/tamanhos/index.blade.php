@@ -28,8 +28,8 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
+                    
+                    <th>Tamanho</th>
                     <th>Editar</th>
                     <th>Excluir</th>
                 </tr>
@@ -37,14 +37,14 @@
             <tbody>
                 @forelse($tamanhos as $tamanho)
                     <tr>
-                        <td>{{ $tamanho->id }}</td>
+                        
                         <td>{{ $tamanho->nome }}</td>
-                        <td>
+                        <td style="width: 100px;">
                             <a href="{{ route('tamanhos.edit', $tamanho->id) }}" class="btn btn-warning btn-sm">
                                 <i class="fas fa-edit"></i>
                             </a>
                         </td>
-                        <td>
+                        <td style="width: 100px;">
                             <form action="{{ route('tamanhos.destroy', $tamanho->id) }}" method="POST" onsubmit="return confirm('Deseja realmente excluir este tamanho?');">
                                 @csrf
                                 @method('DELETE')

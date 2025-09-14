@@ -14,7 +14,6 @@ return new class extends Migration
             $table->unsignedBigInteger('produto_id');
             $table->unsignedBigInteger('cor_id');
             $table->unsignedBigInteger('tamanho_id');
-            $table->integer('estoque')->default(0);
             $table->decimal('preco', 8, 2);
             $table->string('sku')->unique()->nullable();
             $table->boolean('ativo')->default(true);

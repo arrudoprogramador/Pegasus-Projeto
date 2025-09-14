@@ -35,6 +35,19 @@
             <label for="descricao">Descrição</label>
             <textarea id="descricao" name="descricao" rows="4" required>{{ old('descricao', $produto->descricao) }}</textarea>
 
+            <div class="mb-3">
+                <label class="form-label">Foto Atual</label><br>
+                    @if($produto->imagem_capa)
+                        <img src="{{ asset('img/produtos/' . $produto->imagem_capa) }}" alt="Imagem do Produto" style="width: 100px">
+                    @else
+                        <p>Sem imagem</p>
+                    @endif
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Nova Foto (opcional)</label>
+                <input type="file" name="imagem_capa" class="form-control">
+            </div>
             
 
             <button type="submit">Salvar Alterações</button>

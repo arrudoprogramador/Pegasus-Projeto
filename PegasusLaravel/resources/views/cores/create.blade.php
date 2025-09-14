@@ -38,10 +38,7 @@
                     <input type="text" class="form-control" id="nome" name="nome" value="{{ old('nome') }}" required>
                 </div>
 
-                <div class="mb-3">
-                    <label for="hex_code" class="form-label">Código da Cor</label>
-                    <input type="color" class="form-control form-control-color" id="hex_code" name="hex_code" value="{{ old('hex_code', '#000000') }}" title="Escolha uma cor">
-                </div>
+                
 
                 <div class="text-end">
                     <button type="submit" class="btn btn-success">

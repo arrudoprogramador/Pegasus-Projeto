@@ -12,7 +12,7 @@ class CorController extends Controller
      */
     public function index()
     {
-        $cores = Cor::all();
+        $cores = Cor::orderBy('nome', 'asc')->get();;
         return view('cores.index', compact('cores'));
     }
 

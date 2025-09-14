@@ -28,7 +28,7 @@
         <table class="table table-striped table-bordered w-100">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    
                     <th>Nome</th>
                     <th>Editar</th>
                     <th>Excluir</th>
@@ -37,7 +37,7 @@
             <tbody>
                 @forelse($cores as $cor)
                     <tr>
-                        <td>{{ $cor->id }}</td>
+                        
                         <td>{{ $cor->nome }}</td>
                         <td>
                             <a href="{{ route('cores.edit', $cor->id) }}" class="btn btn-warning btn-sm">

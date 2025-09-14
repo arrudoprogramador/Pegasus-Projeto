@@ -11,7 +11,7 @@ class VariacaoProduto extends Model
     use SoftDeletes;
     protected $table = 'variacoes_produto';
     protected $fillable = ['produto_id', 'cor_id', 'tamanho_id', 
-                            'estoque', 'preco', 'sku', 'ativo', 'foto',];
+                             'preco', 'sku', 'ativo', 'foto',];
 
     public function produto() {
         return $this->belongsTo(Produto::class);

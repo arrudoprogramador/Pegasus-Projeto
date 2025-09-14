@@ -49,6 +49,11 @@
                     </div>
 
                     <div class="mb-3">
+                        <label class="form-label">Foto</label>
+                        <input type="file" name="imagem_capa" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="descricao" class="form-label">Descrição</label>
                         <textarea name="descricao" id="descricao" rows="3" class="form-control" required></textarea>
                     </div>

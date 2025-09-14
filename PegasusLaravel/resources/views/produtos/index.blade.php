@@ -74,7 +74,7 @@
         <table class="table table-striped align-middle text-center">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Imagem</th>
                     <th>Marca</th>
                     <th>Nome</th>
                     <th>Descrição</th>
@@ -87,7 +87,12 @@
             <tbody>
                 @forelse($produtos as $p)
                 <tr class="linha-click" data-href="{{ route('variacoes.index', $p->id) }}">
-                    <td>{{ $loop->iteration }}</td> <!-- Número sequencial do produto -->
+                        
+                    <td>
+                        @if($p->imagem_capa)   
+                            <img style="border-radius: 13px;" src="{{ asset('img/produtos/' . $p->imagem_capa) }}" alt="Foto" width="50">
+                        @endif
+                    </td>
                     <td>{{ optional($p->marca)->nome ?? '—' }}</td>
                     <td>{{ $p->nome }}</td>
                     <td>{{ $p->descricao }}</td>

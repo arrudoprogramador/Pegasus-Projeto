@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nome');
             $table->text('descricao')->nullable();
             $table->unsignedBigInteger('marca_id')->nullable();
-            $table->string('imagem_capa')->nullable();
+            $table->string('imagem_capa');
             $table->boolean('ativo')->default(true);
             $table->timestamps();
             $table->softDeletes();

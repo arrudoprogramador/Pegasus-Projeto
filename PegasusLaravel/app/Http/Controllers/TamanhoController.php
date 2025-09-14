@@ -12,7 +12,7 @@ class TamanhoController extends Controller
      */
     public function index()
     {
-        $tamanhos = Tamanho::all();
+        $tamanhos = Tamanho::orderBy('nome', 'asc')->get();
         return view('tamanhos.index', compact('tamanhos'));
     }
 

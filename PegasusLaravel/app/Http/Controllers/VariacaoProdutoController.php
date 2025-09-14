@@ -104,7 +104,6 @@ class VariacaoProdutoController extends Controller
             'produto_id' => 'required|exists:produtos,id',
             'cor_id' => 'nullable|exists:cores,id',
             'tamanho_id' => 'nullable|exists:tamanhos,id',
-            'estoque' => 'required|integer|min:0',
             'preco' => 'required|numeric|min:0',
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -131,7 +130,7 @@ class VariacaoProdutoController extends Controller
             'produto_id' => $request->input('produto_id'),
             'cor_id' => $request->input('cor_id'),
             'tamanho_id' => $request->input('tamanho_id'),
-            'estoque' => $request->input('estoque'),
+            
             'preco' => $request->input('preco'),
             'foto' => $fotoPath,
         ]);
@@ -151,7 +150,6 @@ class VariacaoProdutoController extends Controller
                 VariacaoProduto::create([
                     'produto_id' => $produto->id,
                     'nome' => $produto->nome,
-                    'descricao' => $produto->descricao,
                     'foto' => $produto->variacoes->first()->foto ?? null,
                     'preco' => $produto->variacoes->first()->preco ?? null,
                     'created_at' => now(),
@@ -192,7 +190,6 @@ class VariacaoProdutoController extends Controller
             'produto_id' => 'required|exists:produtos,id',
             'cor_id' => 'nullable|exists:cores,id',
             'tamanho_id' => 'nullable|exists:tamanhos,id',
-            'estoque' => 'required|integer|min:0',
             'preco' => 'required|numeric|min:0',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -217,7 +214,6 @@ class VariacaoProdutoController extends Controller
         $variacao->produto_id = $request->input('produto_id');
         $variacao->cor_id = $request->input('cor_id');
         $variacao->tamanho_id = $request->input('tamanho_id');
-        $variacao->estoque = $request->input('estoque');
         $variacao->preco = $request->input('preco');
         $variacao->save();
 

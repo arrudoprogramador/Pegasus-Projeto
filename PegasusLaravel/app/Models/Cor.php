@@ -10,7 +10,7 @@ class Cor extends Model
     use HasFactory;
     
     protected $table = 'cores'; 
-    protected $fillable = ['nome', 'hex_code'];
+    protected $fillable = ['nome'];
 
     public function variacoes()
     {

@@ -50,16 +50,36 @@ class ProdutoController extends Controller
             'nome' => 'required|string|max:255',
             'marca_id' => 'required|exists:marcas,id',
             'descricao' => 'required|string',
+            'imagem_capa' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        $fotoPath = null;
+
+        if ($request->hasFile('imagem_capa')) {
+            $file = $request->file('imagem_capa');
+
+            if ($file->isValid()) {
+                $directory = public_path('img/produtos');
+                if (!file_exists($directory)) {
+                    mkdir($directory, 0777, true);
+                }
+
+                $fileName = time() . '.' . $file->getClientOriginalExtension();
+                $file->move($directory, $fileName);
+                $fotoPath = $fileName;
+            }
+        }
 
         $produto = new Produto();
         $produto->nome = $request->input('nome');
         $produto->marca_id = $request->input('marca_id');
         $produto->descricao = $request->input('descricao');
+        $produto->imagem_capa = $fotoPath; 
         $produto->save();
 
         return redirect()->route('produtos.index')->with('success', 'Produto cadastrado com sucesso!');
     }
+
 
     // Favoritar/desfavoritar produto
     // public function favoritar($id)
@@ -109,17 +129,38 @@ class ProdutoController extends Controller
             'nome' => 'required|string|max:255',
             'marca_id' => 'required|exists:marcas,id',
             'descricao' => 'required|string',
+            'imagem_capa' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // agora a imagem é opcional
         ]);
 
         $produto = Produto::findOrFail($id);
-        
+
+        // Atualiza os campos principais
         $produto->nome = $request->input('nome');
         $produto->marca_id = $request->input('marca_id');
         $produto->descricao = $request->input('descricao');
+
+        // Se o usuário enviou uma nova imagem, salva ela
+        if ($request->hasFile('imagem_capa')) {
+            $file = $request->file('imagem_capa');
+
+            if ($file->isValid()) {
+                $directory = public_path('img/produtos');
+                if (!file_exists($directory)) {
+                    mkdir($directory, 0777, true);
+                }
+
+                $fileName = time() . '.' . $file->getClientOriginalExtension();
+                $file->move($directory, $fileName);
+
+                $produto->imagem_capa = $fileName;
+            }
+        }
+
         $produto->save();
 
         return redirect()->route('produtos.index')->with('success', 'Produto atualizado com sucesso!');
     }
+
 
     // Deleta produto
     public function destroy($id)
